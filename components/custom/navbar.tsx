@@ -145,7 +145,7 @@ export const Navbar = () => {
         .to(
           innerRef.current,
           {
-            borderRadius: "20px",
+            borderRadius: "4px",
             height: "auto",
             duration: 0.5,
           },
@@ -167,11 +167,11 @@ export const Navbar = () => {
   return (
     <header
       ref={headerRef}
-      className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%]"
+      className="fixed top-6 left-1/2 -translate-x-1/2 z-50 container mx-auto"
     >
       <div
         ref={innerRef}
-        className="backdrop-blur-xl bg-background/90 dark:bg-muted/80 rounded-[20px] border border-border/40 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgba(255,255,255,0.05)] px-6 py-4 flex flex-col overflow-hidden"
+        className="backdrop-blur-xl bg-background/90 dark:bg-muted/80  border border-border/40 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgba(255,255,255,0.05)] px-6 py-4 flex flex-col overflow-hidden"
       >
         {/* Top Row  */}
         <div className="flex items-center justify-between w-full shrink-0">
@@ -181,7 +181,7 @@ export const Navbar = () => {
             onClick={() => setIsMobileMenuOpen(false)}
             className="text-xl font-bold tracking-tight text-primary flex items-center gap-2"
           >
-            <div className="w-8 h-8 rounded-md bg-primary text-primary-foreground flex items-center justify-center font-serif italic text-lg shadow-sm">
+            <div className="w-8 h-8 bg-primary text-primary-foreground flex items-center justify-center font-serif italic text-lg shadow-sm">
               M
             </div>
           </Link>
