@@ -6,7 +6,6 @@ import gsap from "gsap";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { LanguageSwitcher } from "./language-switcher";
-import { MobileMenu } from "./mobile-menu";
 
 function HamburgerButton({
   isOpen,
@@ -23,24 +22,24 @@ function HamburgerButton({
     if (isOpen) {
       // Morph to X
       gsap.to(topBarRef.current, {
-        attr: { x1: 5, y1: 5, x2: 19, y2: 19 },
+        attr: { x1: 6, y1: 6, x2: 22, y2: 22 },
         duration: 0.3,
         ease: "power2.inOut",
       });
       gsap.to(botBarRef.current, {
-        attr: { x1: 19, y1: 5, x2: 5, y2: 19 },
+        attr: { x1: 22, y1: 6, x2: 6, y2: 22 },
         duration: 0.3,
         ease: "power2.inOut",
       });
     } else {
       // Morph back to two bars
       gsap.to(topBarRef.current, {
-        attr: { x1: 3, y1: 8, x2: 21, y2: 8 },
+        attr: { x1: 4, y1: 10, x2: 24, y2: 10 },
         duration: 0.3,
         ease: "power2.inOut",
       });
       gsap.to(botBarRef.current, {
-        attr: { x1: 3, y1: 16, x2: 21, y2: 16 },
+        attr: { x1: 4, y1: 18, x2: 24, y2: 18 },
         duration: 0.3,
         ease: "power2.inOut",
       });
@@ -54,16 +53,16 @@ function HamburgerButton({
       aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
     >
       <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
+        width="28"
+        height="28"
+        viewBox="0 0 28 28"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.8"
+        strokeWidth="2.5"
         strokeLinecap="round"
       >
-        <line ref={topBarRef} x1="3" y1="8" x2="21" y2="8" />
-        <line ref={botBarRef} x1="3" y1="16" x2="21" y2="16" />
+        <line ref={topBarRef} x1="4" y1="10" x2="24" y2="10" />
+        <line ref={botBarRef} x1="4" y1="18" x2="24" y2="18" />
       </svg>
     </button>
   );
@@ -73,6 +72,10 @@ export const Navbar = () => {
   const t = useTranslations("Navbar");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const headerRef = useRef<HTMLElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
   const NavigationLinks = [
     { title: t("home"), href: "/" },
     { title: t("about"), href: "/about" },
@@ -81,13 +84,103 @@ export const Navbar = () => {
     { title: t("blog"), href: "/blog" },
   ];
 
+  useEffect(() => {
+    if (!mobileMenuRef.current || !headerRef.current || !innerRef.current)
+      return;
+
+    const tl = gsap.timeline();
+
+    if (isMobileMenuOpen) {
+      // 1) Show the mobile menu container immediately so its flex layout can be measured
+      gsap.set(mobileMenuRef.current, { display: "flex" });
+
+      // 2) Expand the outer header to full width and top 0
+      tl.to(
+        headerRef.current,
+        {
+          width: "100%",
+          top: "0px",
+          duration: 0.6,
+          ease: "expo.inOut",
+        },
+        0,
+      )
+        // 3) Expand the inner glass container to full viewport height and remove border radius
+        .to(
+          innerRef.current,
+          {
+            borderRadius: "0px",
+            height: "100dvh",
+            duration: 0.6,
+            ease: "expo.inOut",
+          },
+          0,
+        )
+        // 4) Fade in the links and controls over the expanding background
+        .to(
+          mobileMenuRef.current,
+          {
+            height: "auto",
+            opacity: 1,
+            duration: 0.4,
+            ease: "power2.out",
+          },
+          0.2,
+        );
+    } else {
+      // 1) Shrink and fade out the mobile menu content first
+      tl.to(
+        mobileMenuRef.current,
+        {
+          height: 0,
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.in",
+        },
+        0,
+      )
+        // 2) Contract the inner glass container back to auto height and rounded corners
+        .to(
+          innerRef.current,
+          {
+            borderRadius: "20px",
+            height: "auto",
+            duration: 0.5,
+            ease: "expo.inOut",
+          },
+          0.2,
+        )
+        // 3) Contract the outer header back to original pill width and top margin
+        .to(
+          headerRef.current,
+          {
+            width: "95%",
+            top: "1.5rem", // top-6
+            duration: 0.5,
+            ease: "expo.inOut",
+          },
+          0.2,
+        )
+        // Remove display:flex after shrinking
+        .set(mobileMenuRef.current, { display: "none" });
+    }
+  }, [isMobileMenuOpen]);
+
   return (
-    <>
-      <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] ">
-        <div className="backdrop-blur-xl bg-background/90 dark:bg-muted/80 rounded-sm border border-border/40 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgba(255,255,255,0.05)] px-6 py-4 flex items-center justify-between">
+    <header
+      ref={headerRef}
+      className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%]"
+    >
+      <div
+        ref={innerRef}
+        className="backdrop-blur-xl bg-background/90 dark:bg-muted/80 rounded-[20px] border border-border/40 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgba(255,255,255,0.05)] px-6 py-4 flex flex-col overflow-hidden"
+      >
+        {/* Top Row  */}
+        <div className="flex items-center justify-between w-full shrink-0">
           {/* Logo */}
           <Link
             href="/"
+            onClick={() => setIsMobileMenuOpen(false)}
             className="text-xl font-bold tracking-tight text-primary flex items-center gap-2"
           >
             <div className="w-8 h-8 rounded-md bg-primary text-primary-foreground flex items-center justify-center font-serif italic text-lg shadow-sm">
@@ -120,14 +213,41 @@ export const Navbar = () => {
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
           />
         </div>
-      </header>
 
-      {/* Mobile Full-Screen Overlay Menu */}
-      <MobileMenu
-        isOpen={isMobileMenuOpen}
-        onClose={() => setIsMobileMenuOpen(false)}
-        navigationLinks={NavigationLinks}
-      />
-    </>
+        {/* Expandable Mobile Menu Area (Inside Navbar) */}
+        <div
+          ref={mobileMenuRef}
+          className="md:hidden w-full h-0 opacity-0 hidden flex-col flex-1 mt-8"
+        >
+          <div className="flex-1 flex flex-col justify-center gap-6 mb-8">
+            {NavigationLinks.map((link) => (
+              <Link
+                key={link.title}
+                href={link.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-2xl font-bold uppercase tracking-tight text-foreground hover:text-primary transition-colors block border-b border-border/20 dark:border-white/5 pb-4"
+              >
+                {link.title}
+              </Link>
+            ))}
+          </div>
+
+          <div className="flex items-center justify-between pt-6 border-t border-border/20 shrink-0 mt-auto pb-4">
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                {t("language") || "Language"}
+              </span>
+              <LanguageSwitcher />
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+                Theme
+              </span>
+              <ToggleTheme animationType="circle-spread" className="scale-90" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 };
