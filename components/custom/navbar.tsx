@@ -88,11 +88,15 @@ export const Navbar = () => {
     if (!mobileMenuRef.current || !headerRef.current || !innerRef.current)
       return;
 
-    const tl = gsap.timeline();
+    const tl = gsap.timeline({ defaults: { ease: "power4.inOut" } });
 
     if (isMobileMenuOpen) {
       // 1) Show the mobile menu container immediately so its flex layout can be measured
-      gsap.set(mobileMenuRef.current, { display: "flex" });
+      gsap.set(mobileMenuRef.current, {
+        display: "flex",
+        height: "auto",
+        opacity: 0,
+      });
 
       // 2) Expand the outer header to full width and top 0
       tl.to(
@@ -100,8 +104,7 @@ export const Navbar = () => {
         {
           width: "100%",
           top: "0px",
-          duration: 0.6,
-          ease: "expo.inOut",
+          duration: 0.5,
         },
         0,
       )
@@ -111,8 +114,7 @@ export const Navbar = () => {
           {
             borderRadius: "0px",
             height: "100dvh",
-            duration: 0.6,
-            ease: "expo.inOut",
+            duration: 0.5,
           },
           0,
         )
@@ -120,49 +122,45 @@ export const Navbar = () => {
         .to(
           mobileMenuRef.current,
           {
-            height: "auto",
             opacity: 1,
-            duration: 0.4,
+            duration: 0.3,
             ease: "power2.out",
           },
           0.2,
         );
     } else {
-      // 1) Shrink and fade out the mobile menu content first
+      // 1) Fade out the mobile menu content fully first
       tl.to(
         mobileMenuRef.current,
         {
-          height: 0,
           opacity: 0,
-          duration: 0.3,
-          ease: "power2.in",
+          duration: 0.25,
+          ease: "power2.inOut",
         },
         0,
       )
-        // 2) Contract the inner glass container back to auto height and rounded corners
+        // 2) Hide the content from layout so it doesn't artificially stretch the container during shrink
+        .set(mobileMenuRef.current, { display: "none" }, 0.25)
+        // 3) Contract the inner glass container back to auto height and rounded corners
         .to(
           innerRef.current,
           {
             borderRadius: "20px",
             height: "auto",
             duration: 0.5,
-            ease: "expo.inOut",
           },
-          0.2,
+          0.25,
         )
-        // 3) Contract the outer header back to original pill width and top margin
+        // 4) Contract the outer header back to original pill width and top margin
         .to(
           headerRef.current,
           {
             width: "95%",
             top: "1.5rem", // top-6
             duration: 0.5,
-            ease: "expo.inOut",
           },
-          0.2,
-        )
-        // Remove display:flex after shrinking
-        .set(mobileMenuRef.current, { display: "none" });
+          0.25,
+        );
     }
   }, [isMobileMenuOpen]);
 
