@@ -288,13 +288,27 @@ export const ToggleTheme = ({
         ref={buttonRef}
         onClick={toggleTheme}
         className={cn(
-          "p-2 rounded-full transition-colors duration-300",
-          isDark ? "hover:text-amber-400" : "hover:text-blue-500",
+          "relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ",
+          isDark ? "bg-primary" : "bg-muted-foreground/30",
           className,
         )}
+        role="switch"
+        aria-checked={isDark}
         {...props}
       >
-        {isDark ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
+        <span className="sr-only">Toggle theme</span>
+        <span
+          className={cn(
+            "pointer-events-none flex h-5 w-5 items-center justify-center rounded-full bg-background shadow ring-0 transition duration-200 ease-in-out z-10",
+            isDark ? "translate-x-5" : "translate-x-0",
+          )}
+        >
+          {isDark ? (
+            <Moon className="h-3 w-3 text-primary" />
+          ) : (
+            <Sun className="h-3 w-3 text-amber-500" />
+          )}
+        </span>
       </button>
 
       {/* This inline <style> block is necessary to override the default 

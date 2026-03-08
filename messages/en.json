@@ -4,6 +4,7 @@
     "about": "About",
     "projects": "Projects",
     "contact": "Contact",
+    "blog": "Blog",
     "language": "Language"
   },
   "Footer": {
@@ -13,5 +14,14 @@
     "about": "About",
     "contact": "Contact",
     "language": "Language"
+  },
+  "Hero": {
+    "subtitle": "MERN Stack & Next.js Developer",
+    "titleLine1": "Full Stack",
+    "titleLine2": "Developer",
+    "titleLine3": "in Dhaka.",
+    "description": "Outstanding expertise, transparent solutions. Browse my projects in React, Next.js, and modern web development.",
+    "primaryButton": "Talk With Me",
+    "secondaryButton": "My Projects"
   }
 }

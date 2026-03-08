@@ -177,7 +177,7 @@ export default function Dock({
         }}
         className={`absolute bottom-2 left-1/2 -translate-x-1/2 transform 
             flex items-end gap-4 w-fit rounded-2xl 
-            border-2 border   px-4 pb-2 ${className}`}
+            border-2    px-4 pb-2 ${className}`}
         style={{ height: panelHeight }}
         role="toolbar"
         aria-label="Application dock"
