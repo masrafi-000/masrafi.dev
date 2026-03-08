@@ -1,0 +1,17 @@
+{
+  "Navbar": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "Footer": {
+    "copyright": "© {year} All rights reserved.",
+    "links": "Quick Links",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "language": "Language"
+  }
+}

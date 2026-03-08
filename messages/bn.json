@@ -1,0 +1,17 @@
+{
+  "Navbar": {
+    "home": "হোম",
+    "about": "সম্পর্কে",
+    "projects": "প্রকল্প",
+    "contact": "যোগাযোগ",
+    "language": "ভাষা"
+  },
+  "Footer": {
+    "copyright": "© {year} সর্বস্বত্ব সংরক্ষিত।",
+    "links": "গুরুত্বপূর্ণ লিংক",
+    "home": "হোম",
+    "about": "সম্পর্কে",
+    "contact": "যোগাযোগ",
+    "language": "ভাষা"
+  }
+}
