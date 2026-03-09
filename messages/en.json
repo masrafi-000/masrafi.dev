@@ -16,11 +16,11 @@
     "language": "Language"
   },
   "Hero": {
-    "subtitle": "MERN Stack & Next.js Developer",
-    "titleLine1": "Full Stack",
-    "titleLine2": "Developer",
-    "titleLine3": "in Dhaka.",
-    "description": "Outstanding expertise, transparent solutions. Browse my projects in React, Next.js, and modern web development.",
+    "greeting": "Hi, I'm S M Masrafi",
+    "roleLine1": "Frontend",
+    "roleLine2": "Developer",
+    "description": "I build fast, responsive, and scalable web interfaces using React.js, Next.js, TypeScript, and Tailwind CSS. My focus is clean architecture, reusable components, and delivering user experiences that feel smooth and modern.",
+    "highlight": "Specialized in modern React ecosystems, UI performance optimization, and scalable frontend architecture.",
     "primaryButton": "Talk With Me",
     "secondaryButton": "My Projects"
   }

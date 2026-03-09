@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { LanguageSwitcher } from "./language-switcher";
+import MasrafiLogo from "./logo";
 
 function HamburgerButton({
   isOpen,
@@ -181,9 +182,7 @@ export const Navbar = () => {
             onClick={() => setIsMobileMenuOpen(false)}
             className="text-xl font-bold tracking-tight text-primary flex items-center gap-2"
           >
-            <div className="w-8 h-8 bg-primary text-primary-foreground flex items-center justify-center font-serif italic text-lg shadow-sm">
-              M
-            </div>
+            <MasrafiLogo />
           </Link>
 
           {/* Navigation Links - Desktop Only */}
