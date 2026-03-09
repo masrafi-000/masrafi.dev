@@ -1,15 +1,14 @@
 "use client";
 
 import { Moon, Sun } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useTheme } from "next-themes";
+import { useCallback, useEffect, useRef } from "react";
 import { flushSync } from "react-dom";
 
 import { cn } from "@/lib/utils";
+import { useThemeStore } from "@/store/theme-store";
 
-// 1. Define the possible animation types (UPDATED to include all demo types)
-// NOTE: Type is renamed from 'AnimationType' to 'ThemeAnimationType'
-// to avoid conflicts if used with the demo file in the same scope,
-// though the original 'AnimationType' is kept for minimal change.
+// 1. Define the possible animation types
 type AnimationType =
   | "none"
   | "circle-spread"
@@ -25,48 +24,38 @@ type AnimationType =
   | "swipe-down"
   | "wave-ripple";
 
-// 2. Interface is renamed
 interface ToggleThemeProps extends React.ComponentPropsWithoutRef<"button"> {
   duration?: number;
   animationType?: AnimationType;
 }
 
-// 3. Component and export are renamed
 export const ToggleTheme = ({
   className,
   duration = 400,
   animationType = "circle-spread",
   ...props
 }: ToggleThemeProps) => {
-  const [isDark, setIsDark] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
+  const { isDark, setIsDark } = useThemeStore();
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  // Sync next-themes resolved theme → Zustand store
   useEffect(() => {
-    const updateTheme = () => {
-      setIsDark(document.documentElement.classList.contains("dark"));
-    };
-
-    updateTheme();
-
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
+    if (resolvedTheme) {
+      setIsDark(resolvedTheme === "dark");
+    }
+  }, [resolvedTheme, setIsDark]);
 
   const toggleTheme = useCallback(async () => {
     if (!buttonRef.current) return;
 
+    const newTheme = isDark ? "light" : "dark";
+
     // Wait for the DOM update to complete within the View Transition
     await document.startViewTransition(() => {
       flushSync(() => {
-        const newTheme = !isDark;
-        setIsDark(newTheme);
-        document.documentElement.classList.toggle("dark");
-        localStorage.setItem("theme", newTheme ? "dark" : "light");
+        // next-themes handles localStorage + class toggling
+        setTheme(newTheme);
       });
     }).ready;
 
@@ -280,7 +269,7 @@ export const ToggleTheme = ({
         // No custom animation runs
         break;
     }
-  }, [isDark, duration, animationType]);
+  }, [isDark, duration, animationType, setTheme]);
 
   return (
     <>

@@ -1,5 +1,6 @@
 import { Footer } from "@/components/custom/footer";
 import { Navbar } from "@/components/custom/navbar";
+import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -30,7 +31,6 @@ export default async function RootLayout({
 }>) {
   const { locale } = await params;
 
-  // Enable static rendering
   setRequestLocale(locale);
   const messages = await getMessages();
 
@@ -39,11 +39,19 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <NextIntlClientProvider messages={messages} locale={locale}>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </NextIntlClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          storageKey="theme"
+          disableTransitionOnChange={false}
+        >
+          <NextIntlClientProvider messages={messages} locale={locale}>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

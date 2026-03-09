@@ -69,9 +69,9 @@ export const Hero = () => {
                 variant="outline"
                 className="px-4 py-1.5 text-lg font-medium tracking-widest uppercase bg-primary/5 text-primary border-primary/20 backdrop-blur-md shadow-sm transition-all hover:bg-primary/10 hover:border-primary/30"
               >
-                <span className="relative flex h-2 w-2 mr-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full   bg-primary opacity-75"></span>
-                  <span className="relative inline-flex   h-2 w-2 bg-primary"></span>
+                <span className="relative flex h-2 w-2 mr-3 ">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full   bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full  h-2 w-2 bg-primary"></span>
                 </span>
                 {t("greeting")}
               </Badge>
@@ -159,8 +159,8 @@ export const Hero = () => {
 
               {/* Floating Tech Badges */}
               <div className="absolute top-[10%] -left-[5%] lg:-left-[15%] z-20 animate-[bounce_3s_ease-in-out_infinite]">
-                <div className="flex items-center gap-2 bg-background/80 backdrop-blur-md border border-border shadow-lg   px-3 py-2 sm:px-4">
-                  <div className="w-5 h-5 sm:w-6 sm:h-6   bg-[#61DAFB]/10 flex items-center justify-center">
+                <div className="flex items-center gap-2 bg-background/80 backdrop-blur-md border border-border shadow-lg rounded-full  px-3 py-2 sm:px-4">
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#61DAFB]/10 flex items-center justify-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="-11.5 -10.23174 23 20.46348"
@@ -180,9 +180,9 @@ export const Hero = () => {
               </div>
 
               <div className="absolute top-[40%] -right-[5%] lg:-right-[10%] xl:-right-[15%] z-20 animate-[bounce_4s_ease-in-out_infinite_1s]">
-                <div className="flex items-center gap-2 bg-background/80 backdrop-blur-md border border-border shadow-lg   px-3 py-2 sm:px-4">
-                  <div className="w-5 h-5 sm:w-6 sm:h-6   bg-foreground flex items-center justify-center">
-                    <span className="text-[10px] sm:text-xs font-bold text-background">
+                <div className="flex items-center gap-2 bg-background/80 backdrop-blur-md border border-border shadow-md rounded-full   px-3 py-2 sm:px-4">
+                  <div className="w-5 h-5 sm:w-6 sm:h-6  rounded-full bg-foreground flex items-center justify-center">
+                    <span className="text-[10px] sm:text-xs  font-bold text-background">
                       N
                     </span>
                   </div>
@@ -193,7 +193,7 @@ export const Hero = () => {
               </div>
 
               <div className="absolute bottom-[20%] -left-[5%] lg:left-[5%] z-20 animate-[bounce_3.5s_ease-in-out_infinite_0.5s]">
-                <div className="flex items-center gap-2 bg-background/80 backdrop-blur-md border border-border shadow-lg   px-3 py-2 sm:px-4">
+                <div className="flex items-center gap-2 bg-background/80 backdrop-blur-md border border-border shadow-lg rounded-full  px-3 py-2 sm:px-4">
                   <div className="w-5 h-5 sm:w-6 sm:h-6  bg-[#3178C6] flex items-center justify-center">
                     <span className="text-[10px] sm:text-xs font-bold text-white">
                       TS
