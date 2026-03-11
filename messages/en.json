@@ -53,5 +53,16 @@
     "year3Desc": "Transitioned to full-stack development, mastering Next.js, TypeScript, and backend integrations to build highly scalable web apps.",
     "year4Title": "Present & Beyond",
     "year4Desc": "Continuously exploring emerging technologies, focusing on AI integrations and creating seamless, highly interactive web experiences."
+  },
+  "GitHub": {
+    "sectionTitle": "GitHub Activity",
+    "sectionSubtitle": "My open source contributions and recent projects.",
+    "followers": "Followers",
+    "following": "Following",
+    "publicRepos": "Public Repos",
+    "recentRepos": "Recent Repositories",
+    "contributions": "Contribution Graph",
+    "viewProfile": "View GitHub Profile",
+    "updatedAuth": "Updated at"
   }
 }

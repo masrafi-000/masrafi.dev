@@ -1,4 +1,4 @@
-
+import { QueryProvider } from "@/providers/query-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
@@ -46,7 +46,9 @@ export default async function RootLayout({
           disableTransitionOnChange={false}
         >
           <NextIntlClientProvider messages={messages} locale={locale}>
-            {children}
+            <QueryProvider>
+              {children}
+            </QueryProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
