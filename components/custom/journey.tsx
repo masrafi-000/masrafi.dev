@@ -53,11 +53,10 @@ export const Journey = () => {
       if (headingRef.current) {
         gsap.fromTo(
           headingRef.current,
-          { opacity: 0, y: 30, scale: 0.98 },
+          { opacity: 0, y: 30 },
           {
             opacity: 1,
             y: 0,
-            scale: 1,
             duration: 0.8,
             ease: "power3.out",
             willChange: "transform, opacity",
@@ -74,7 +73,7 @@ export const Journey = () => {
       if (cardsRef.current.length > 0) {
         gsap.fromTo(
           cardsRef.current,
-          { opacity: 0, y: 50 },
+          { opacity: 0, y: 30 },
           {
             opacity: 1,
             y: 0,

@@ -64,11 +64,10 @@ export const GitHubActivity = () => {
         // Add a clean stagger animation to all cards simultaneously
         gsap.fromTo(
           cardsRef.current,
-          { opacity: 0, y: 60, scale: 0.98 },
+          { opacity: 0, y: 30 },
           {
             opacity: 1,
             y: 0,
-            scale: 1,
             duration: 0.8,
             stagger: 0.15,
             ease: "power3.out",

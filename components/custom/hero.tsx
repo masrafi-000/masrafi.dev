@@ -64,7 +64,7 @@ export const Hero = () => {
           {/* Left Content Column */}
           <div className="flex flex-col gap-6 w-full px-4 py-4 relative z-20">
             {/* Modern Subtitle Badge */}
-            <div ref={addToRefs} className="flex items-start">
+            <div ref={addToRefs} className="flex items-start mt-20 2xl:mt-0">
               <Badge
                 variant="outline"
                 className="px-4 py-1.5 text-lg font-medium tracking-widest uppercase bg-primary/5 text-primary border-primary/20 backdrop-blur-md shadow-sm transition-all hover:bg-primary/10 hover:border-primary/30"
