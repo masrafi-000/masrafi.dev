@@ -168,7 +168,7 @@ export const Navbar = () => {
   return (
     <header
       ref={headerRef}
-      className="fixed top-6 left-1/2 -translate-x-1/2 z-50 container mx-auto"
+      className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] mx-auto"
     >
       <div
         ref={innerRef}
