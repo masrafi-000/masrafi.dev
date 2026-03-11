@@ -1,5 +1,4 @@
-import { Footer } from "@/components/custom/footer";
-import { Navbar } from "@/components/custom/navbar";
+
 import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
@@ -47,9 +46,7 @@ export default async function RootLayout({
           disableTransitionOnChange={false}
         >
           <NextIntlClientProvider messages={messages} locale={locale}>
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
+            {children}
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
