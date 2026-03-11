@@ -49,9 +49,9 @@ export const Hero = () => {
   return (
     <Section
       variant="full"
-      padding="none"
+      padding="default"
       ref={containerRef}
-      className="relative min-h-screen flex items-center pt-36 md:pt-24 pb-12 overflow-hidden bg-background"
+      className="relative min-h-screen flex items-center overflow-hidden bg-background"
     >
       {/* Modern Background Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -121,18 +121,18 @@ export const Hero = () => {
             {/* Call to Action Buttons */}
             <div
               ref={addToRefs}
-              className="flex flex-wrap items-center gap-4 mt-6"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mt-6 w-full"
             >
               <Button
                 size="lg"
-                className=" px-8 text-base h-12 shadow-[0_0_20px_rgba(var(--primary),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] hover:-translate-y-1 transition-all duration-300"
+                className="w-full sm:w-auto px-8 text-base h-12 shadow-[0_0_20px_rgba(var(--primary),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] hover:-translate-y-1 transition-all duration-300"
               >
                 {t("primaryButton")}
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className=" px-8 text-base h-12 bg-background/50 backdrop-blur-sm border-2 border-border hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all duration-300"
+                className="w-full sm:w-auto px-8 text-base h-12 bg-background/50 backdrop-blur-sm border-2 border-border hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all duration-300"
               >
                 {t("secondaryButton")}
               </Button>
@@ -158,7 +158,7 @@ export const Hero = () => {
               </div>
 
               {/* Floating Tech Badges */}
-              <div className="absolute top-[10%] -left-[5%] lg:-left-[15%] z-20 animate-[bounce_3s_ease-in-out_infinite]">
+              <div className="absolute top-[10%] left-0 sm:-left-[5%] lg:-left-[15%] z-20 animate-[bounce_3s_ease-in-out_infinite]">
                 <div className="flex items-center gap-2 bg-background/80 backdrop-blur-md border border-border shadow-lg rounded-full  px-3 py-2 sm:px-4">
                   <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#61DAFB]/10 flex items-center justify-center">
                     <svg
@@ -179,7 +179,7 @@ export const Hero = () => {
                 </div>
               </div>
 
-              <div className="absolute top-[40%] -right-[5%] lg:-right-[10%] xl:-right-[15%] z-20 animate-[bounce_4s_ease-in-out_infinite_1s]">
+              <div className="absolute top-[40%] right-0 sm:-right-[5%] lg:-right-[10%] xl:-right-[15%] z-20 animate-[bounce_4s_ease-in-out_infinite_1s]">
                 <div className="flex items-center gap-2 bg-background/80 backdrop-blur-md border border-border shadow-md rounded-full   px-3 py-2 sm:px-4">
                   <div className="w-5 h-5 sm:w-6 sm:h-6  rounded-full bg-foreground flex items-center justify-center">
                     <span className="text-[10px] sm:text-xs  font-bold text-background">
@@ -192,7 +192,7 @@ export const Hero = () => {
                 </div>
               </div>
 
-              <div className="absolute bottom-[20%] -left-[5%] lg:left-[5%] z-20 animate-[bounce_3.5s_ease-in-out_infinite_0.5s]">
+              <div className="absolute bottom-[20%] left-0 sm:-left-[5%] lg:left-[5%] z-20 animate-[bounce_3.5s_ease-in-out_infinite_0.5s]">
                 <div className="flex items-center gap-2 bg-background/80 backdrop-blur-md border border-border shadow-lg rounded-full  px-3 py-2 sm:px-4">
                   <div className="w-5 h-5 sm:w-6 sm:h-6  bg-[#3178C6] flex items-center justify-center">
                     <span className="text-[10px] sm:text-xs font-bold text-white">

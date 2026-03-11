@@ -37,6 +37,7 @@ export const CTA = () => {
           duration: 0.8, 
           stagger: 0.15, 
           ease: "power3.out",
+          willChange: "transform, opacity",
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top 80%", // Starts animation when top of container hits 80% of viewport
@@ -95,17 +96,17 @@ export const CTA = () => {
             {t("description")}
           </p>
 
-          <div ref={addToRefs} className="flex flex-wrap items-center justify-center gap-4">
+          <div ref={addToRefs} className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 w-full">
             <Button
               size="lg"
-              className="px-8 text-base h-12 shadow-[0_0_20px_rgba(var(--primary),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] hover:-translate-y-1 transition-all duration-300"
+              className="w-full sm:w-auto px-8 text-base h-12 shadow-[0_0_20px_rgba(var(--primary),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] hover:-translate-y-1 transition-all duration-300"
             >
               {t("primaryButton")}
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="px-8 text-base h-12 bg-background/50 backdrop-blur-sm border-2 border-border hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all duration-300"
+              className="w-full sm:w-auto px-8 text-base h-12 bg-background/50 backdrop-blur-sm border-2 border-border hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all duration-300"
             >
               {t("secondaryButton")}
             </Button>

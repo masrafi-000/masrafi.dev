@@ -88,6 +88,7 @@ export const CaseStudy = () => {
             y: 0,
             duration: 0.8,
             ease: "power3.out",
+            willChange: "transform, opacity",
             scrollTrigger: {
               trigger: step,
               start: "top 85%", // Trigger when the top of the step is 85% down the viewport

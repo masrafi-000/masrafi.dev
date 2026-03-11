@@ -11,9 +11,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { GitHubCalendar } from "react-github-calendar";
+import { Button } from "../ui/button";
+import Section from "./section";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -50,26 +53,40 @@ export const GitHubActivity = () => {
   useEffect(() => {
     if (!sectionRef.current || cardsRef.current.length === 0 || isLoading) return;
 
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        cardsRef.current,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-    }, sectionRef);
+    let ctx: gsap.Context;
 
-    return () => ctx.revert();
+    // Small delay to ensure the browser has laid out the newly rendered elements
+    // so ScrollTrigger can accurately measure their positions.
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+
+      ctx = gsap.context(() => {
+        // Add a clean stagger animation to all cards simultaneously
+        gsap.fromTo(
+          cardsRef.current,
+          { opacity: 0, y: 60, scale: 0.98 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+            willChange: "transform, opacity",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 75%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }, sectionRef);
+    }, 150);
+
+    return () => {
+      clearTimeout(timer);
+      if (ctx) ctx.revert();
+    };
   }, [isLoading, data]);
 
   const addToRefs = (el: HTMLDivElement | null) => {
@@ -81,7 +98,7 @@ export const GitHubActivity = () => {
   const isDark = resolvedTheme === "dark";
 
   return (
-    <section ref={sectionRef} className="relative bg-background py-24 md:py-32 overflow-hidden">
+    <Section ref={sectionRef} padding="default" className="relative bg-background overflow-hidden">
       
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none z-0 opacity-40">
@@ -99,19 +116,76 @@ export const GitHubActivity = () => {
         </SectionHeading>
 
         {error && (
-          <div className="text-center text-destructive p-4 bg-destructive/10 rounded-md">
+          <div className="text-center text-destructive p-4 bg-destructive/10 rounded-sm">
             Failed to load GitHub activity. Please try again later.
           </div>
         )}
 
         {isLoading || !data ? (
-          /* Loading Skeletons */
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Skeleton className="h-[300px] lg:col-span-1 w-full" />
-            <Skeleton className="h-[300px] lg:col-span-2 w-full" />
-            {[...Array(6)].map((_, i) => (
-              <Skeleton key={i} className="h-[180px] w-full lg:col-span-1" />
-            ))}
+          /* Detailed Loading Skeletons matching the Bento Grid structure */
+          <div className="flex flex-col gap-6 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              
+              {/* Profile Card Skeleton */}
+              <Card className="bg-background/60 backdrop-blur-xl border-border/40  shadow-sm lg:col-span-1 flex flex-col items-center text-center p-0 gap-0">
+                <div className="flex flex-col items-center text-center pb-2 pt-8 px-6 w-full">
+                  <Skeleton className="w-24 h-24 rounded-full mb-4" />
+                  <Skeleton className="h-8 w-3/4 mb-2 rounded-sm" />
+                  <Skeleton className="h-4 w-5/6 mb-1 rounded-sm" />
+                  <Skeleton className="h-4 w-4/6 rounded-sm" />
+                </div>
+                <CardContent className="flex flex-col items-center justify-center grow pt-6 w-full">
+                  <div className="flex gap-4 w-full justify-center">
+                    <div className="flex flex-col items-center gap-2">
+                      <Skeleton className="h-8 w-12 rounded-sm" />
+                      <Skeleton className="h-3 w-20 rounded-sm" />
+                    </div>
+                    <div className="w-px bg-border/50 h-full min-h-[40px]" />
+                    <div className="flex flex-col items-center gap-2">
+                      <Skeleton className="h-8 w-12 rounded-sm" />
+                      <Skeleton className="h-3 w-20 rounded-sm" />
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter className="pb-8 pt-4 w-full">
+                  <Skeleton className="w-full h-12 rounded-xl" />
+                </CardFooter>
+              </Card>
+
+              {/* Contribution Graph Skeleton */}
+              <Card className="bg-background/60 backdrop-blur-xl border-border/40 shadow-sm lg:col-span-2 flex flex-col justify-center overflow-hidden p-0 gap-0">
+                <CardHeader className="flex flex-row items-center gap-3 pb-6 pt-8 px-8 w-full">
+                  <Skeleton className="w-6 h-6 rounded-full shrink-0" />
+                  <Skeleton className="h-8 w-40 rounded-sm" />
+                </CardHeader>
+                <CardContent className="px-8 pb-8 overflow-hidden w-full h-[200px] flex items-center justify-center">
+                  <Skeleton className="w-full h-full rounded-xl" />
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Recent Repositories Skeleton Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <Card key={i} className="h-full bg-background/60 backdrop-blur-xl border-border/40 shadow-sm flex flex-col relative overflow-hidden group/card p-0 gap-0">
+                  <CardHeader className="flex flex-row justify-between items-start pt-6 px-6 pb-2 gap-2 relative z-10 w-full space-y-0">
+                    <div className="flex items-center gap-2 w-full">
+                      <Skeleton className="w-5 h-5 rounded-full shrink-0" />
+                      <Skeleton className="h-6 w-3/4 rounded-sm" />
+                    </div>
+                    <Skeleton className="w-12 h-6 rounded-full shrink-0" />
+                  </CardHeader>
+                  <CardContent className="px-6 py-2 grow flex flex-col relative z-10 gap-2">
+                    <Skeleton className="h-4 w-full rounded-sm" />
+                    <Skeleton className="h-4 w-5/6 rounded-sm" />
+                  </CardContent>
+                  <CardFooter className="px-6 pb-6 pt-2 flex justify-between items-center mt-auto w-full">
+                    <Skeleton className="h-4 w-1/3 rounded-sm" />
+                    <Skeleton className="h-4 w-1/4 rounded-sm" />
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
           </div>
         ) : (
           <div className="flex flex-col gap-6">
@@ -125,8 +199,8 @@ export const GitHubActivity = () => {
               >
                 <div className="flex flex-col items-center text-center pb-2 pt-8 px-6">
                   <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-background shadow-lg mb-4 group-hover:scale-105 transition-transform duration-500 shrink-0">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={data.user.avatar_url} alt={data.user.login} className="w-full h-full object-cover" />
+                   
+                    <Image src={data.user.avatar_url} alt={data.user.login} width={100} height={100} className="w-full h-full object-cover" />
                   </div>
                   <CardTitle className="text-2xl font-bold font-serif text-foreground mb-2">
                     {data.user.login}
@@ -152,9 +226,9 @@ export const GitHubActivity = () => {
 
                 <CardFooter className="pb-8 pt-4">
                   <Link href={data.user.html_url} target="_blank" rel="noopener noreferrer" className="w-full">
-                    <div className="w-full py-3 px-6 bg-primary text-center text-primary-foreground font-medium rounded-xl hover:opacity-90 transition-opacity">
+                    <Button className="w-full py-3 px-6 bg-primary text-center text-primary-foreground font-medium  hover:opacity-90 transition-opacity">
                       {t("viewProfile")}
-                    </div>
+                    </Button>
                   </Link>
                 </CardFooter>
               </Card>
@@ -170,7 +244,7 @@ export const GitHubActivity = () => {
                     {t("contributions")}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="px-8 pb-8 overflow-x-auto w-full">
+                <CardContent className="px-4 sm:px-8 pb-8 overflow-x-auto w-full">
                   {/* 
                     Using react-github-calendar explicitly with the masrafi-000 username 
                     It handles rendering the beautiful SVG grids dynamically 
@@ -251,6 +325,6 @@ export const GitHubActivity = () => {
           </div>
         )}
       </Container>
-    </section>
+    </Section>
   );
 };

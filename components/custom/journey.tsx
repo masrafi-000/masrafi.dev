@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
+import Section from "./section";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -59,6 +60,7 @@ export const Journey = () => {
             scale: 1,
             duration: 0.8,
             ease: "power3.out",
+            willChange: "transform, opacity",
             scrollTrigger: {
               trigger: headingRef.current,
               start: "top 85%",
@@ -76,9 +78,10 @@ export const Journey = () => {
           {
             opacity: 1,
             y: 0,
-            duration: 0.7,
+            duration: 0.8,
             stagger: 0.15, // Butter smooth stagger
             ease: "power3.out",
+            willChange: "transform, opacity",
             scrollTrigger: {
               trigger: cardsRef.current[0], // Trigger when the first card in the grid enters
               start: "top 85%",
@@ -100,9 +103,10 @@ export const Journey = () => {
   };
 
   return (
-    <section
+    <Section
       ref={sectionRef}
-      className="relative bg-background py-24 md:py-32 overflow-hidden"
+      padding="default"
+      className="relative bg-background overflow-hidden"
     >
       {/* Classic Architectural Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px] mask-[radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)] pointer-events-none" />
@@ -122,7 +126,7 @@ export const Journey = () => {
           {/* Top Row: Full Width Heading Card */}
           <div 
             ref={headingRef} 
-            className="w-full bg-background/60 backdrop-blur-xl  p-10 md:p-14 mb-6  text-center  hover:bg-background/80 hover:border-primary/30 transition-all duration-500 group relative overflow-hidden"
+            className="w-full bg-background/60 backdrop-blur-xl p-6 sm:p-10 md:p-14 mb-6 text-center hover:bg-background/80 hover:border-primary/30 transition-all duration-500 group relative overflow-hidden"
           >
             {/* Glowing hover accent */}
             <div className="absolute inset-0 bg-linear-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
@@ -182,6 +186,6 @@ export const Journey = () => {
 
         </div>
       </Container>
-    </section>
+    </Section>
   );
 };

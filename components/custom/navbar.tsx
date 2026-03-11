@@ -214,7 +214,7 @@ export const Navbar = () => {
         {/* Expandable Mobile Menu Area (Inside Navbar) */}
         <div
           ref={mobileMenuRef}
-          className="md:hidden w-full h-0 opacity-0 hidden flex-col flex-1 mt-8"
+          className="md:hidden w-full h-0 opacity-0 hidden flex-col flex-1 mt-8 overflow-y-auto"
         >
           <div className="flex-1 flex flex-col justify-center gap-6 mb-8">
             {NavigationLinks.map((link) => (
