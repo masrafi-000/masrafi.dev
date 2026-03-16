@@ -3,6 +3,8 @@
     "id": "1",
     "slug": "ecommerce-dashboard",
     "title": "E-commerce Admin Dashboard",
+    "category": "Ecommerce",
+    "year": 2024,
     "description": "A high-performance admin panel for tracking sales and inventory.",
     "longDescription": "This comprehensive dashboard built for e-commerce managers provides real-time insights into sales performance, inventory levels, and customer behavior. It features complex data visualizations using Chart.js, a robust state management system with Zustand, and a high-performance backend powered by Prisma and PostgreSQL.",
     "tech": ["React", "Zustand", "Prisma", "PostgreSQL", "Tailwind CSS"],
@@ -18,8 +20,10 @@
   },
   {
     "id": "2",
-    "slug": "ai-content-generator",
+    "slug": "ai-content-studio",
     "title": "AI Content Studio",
+    "category": "SAAS",
+    "year": 2024,
     "description": "Integration of Gemini API for automated content creation.",
     "longDescription": "AI Content Studio is a powerful tool designed for creators. By leveraging the Google Gemini API, it allows users to generate high-quality blog posts, social media captions, and product descriptions in seconds. The application features a sleek, intuitive UI built with Next.js and Framer Motion.",
     "tech": ["Next.js", "Google AI SDK", "TypeScript", "Framer Motion"],
@@ -37,6 +41,8 @@
     "id": "3",
     "slug": "portfolio-v1",
     "title": "Minimalist Portfolio v1",
+    "category": "Portfolio",
+    "year": 2023,
     "description": "A modern, interactive portfolio built with Next.js and GSAP.",
     "longDescription": "My previous portfolio iteration focused on pure minimalist design and high-end animations. It showcased the power of GSAP for orchestrating complex entrance sequences and ScrollTrigger for interactive storytelling. This project laid the foundation for my current design philosophy.",
     "tech": ["Next.js", "TypeScript", "GSAP", "Tailwind CSS"],
@@ -48,6 +54,78 @@
     },
     "gallery": [
       "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2372&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "4",
+    "slug": "pos-pro-system",
+    "title": "POS Pro Cloud",
+    "category": "POS",
+    "year": 2024,
+    "description": "Cloud-based point of sale system for retail businesses.",
+    "longDescription": "POS Pro Cloud is a robust point of sale system designed for retailers of all sizes. It features offline support, real-time inventory synchronization across multiple locations, and comprehensive sales reporting. Built with Electron for desktop and React for the web client.",
+    "tech": ["React", "Electron", "Firebase", "Redux"],
+    "imageSrc": "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?q=80&w=2370&auto=format&fit=crop",
+    "featured": false,
+    "links": {
+      "live": "https://pos.masrafi.dev"
+    },
+    "gallery": [
+      "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?q=80&w=2370&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "5",
+    "slug": "booking-engine",
+    "title": "StayFlow Booking",
+    "category": "Booking",
+    "year": 2023,
+    "description": "Advanced hotel and apartment booking engine.",
+    "longDescription": "StayFlow is a specialized booking engine built for the hospitality industry. It includes a dynamic pricing engine, channel manager integration, and a sleek guest booking portal. Optimized for high conversion rates and mobile devices.",
+    "tech": ["Next.js", "Prisma", "Stripe", "PostgreSQL"],
+    "imageSrc": "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2370&auto=format&fit=crop",
+    "featured": false,
+    "links": {
+      "github": "https://github.com/masrafi-000/booking"
+    },
+    "gallery": [
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2370&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "6",
+    "slug": "learnify-lms",
+    "title": "Learnify LMS",
+    "category": "ELearning",
+    "year": 2022,
+    "description": "Comprehensive learning management system for schools.",
+    "longDescription": "Learnify LMS provides a seamless educational experience for both teachers and students. It features live video classes, automated grading, student progress tracking, and interactive quizzes. Built with performance and scalability in mind.",
+    "tech": ["Vue.js", "Node.js", "Socket.io", "MongoDB"],
+    "imageSrc": "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=2370&auto=format&fit=crop",
+    "featured": false,
+    "links": {
+      "live": "https://learnify.masrafi.dev"
+    },
+    "gallery": [
+      "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=2370&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "7",
+    "slug": "pro-erp",
+    "title": "Enterprise Resource Planner",
+    "category": "ERP",
+    "year": 2024,
+    "description": "Comprehensive ERP system for manufacturing units.",
+    "longDescription": "A heavy-duty ERP solution managing supply chains, payroll, HRM, and accounting. Built with a focus on data integrity and real-time reporting for large industrial units.",
+    "tech": ["React", "PostgreSQL", "Express", "Node.js"],
+    "imageSrc": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2370&auto=format&fit=crop",
+    "featured": false,
+    "links": {
+      "live": "https://erp.masrafi.dev"
+    },
+    "gallery": [
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2370&auto=format&fit=crop"
     ]
   }
 ]

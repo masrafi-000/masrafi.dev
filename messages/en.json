@@ -79,6 +79,16 @@
     "archiveDescription": "A complete archive of my engineering work, from commercial applications to experimental prototypes.",
     "viewProject": "View Project",
     "backToProjects": "Back to Projects",
-    "projectGallery": "Project Gallery"
+    "projectGallery": "Project Gallery",
+    "filterByCategory": "Filter by Category",
+    "filterByTech": "Filter by Technology",
+    "sortBy": "Sort By",
+    "newest": "Newest First",
+    "oldest": "Oldest First",
+    "nameAsc": "Name (A-Z)",
+    "nameDesc": "Name (Z-A)",
+    "searchPlaceholder": "Search projects...",
+    "noResults": "No projects found matching your criteria.",
+    "clearFilters": "Clear Filters"
   }
 }
