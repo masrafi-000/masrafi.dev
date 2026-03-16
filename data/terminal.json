@@ -1,0 +1,83 @@
+{
+  "personal": {
+    "name": "S M Masrafi",
+    "role": "Frontend Developer",
+    "location": "Dhaka, Bangladesh",
+    "bio": "I am a passionate Frontend Developer with expertise in building fast, responsive, and scalable web interfaces. I love working with React, Next.js, and TypeScript, focusing on clean architecture and smooth user experiences.",
+    "links": {
+      "github": "https://github.com/masrafi-000",
+      "linkedin": "https://linkedin.com/in/masrafi",
+      "portfolio": "https://masrafi.dev"
+    }
+  },
+  "whoami": {
+    "user": "kali",
+    "host": "masrafi",
+    "shell": "/bin/zsh",
+    "home": "/home/kali",
+    "uptime": "2 hours, 42 minutes",
+    "os": "Kali GNU/Linux Rolling"
+  },
+  "skills": {
+    "frontend": [
+      "React.js",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "GSAP",
+      "Framer Motion",
+      "Zustand",
+      "Redux Toolkit"
+    ],
+    "backend": [
+      "Node.js",
+      "Express",
+      "Prisma ORM",
+      "PostgreSQL"
+    ],
+    "tools": [
+      "Git",
+      "GitHub",
+      "VS Code",
+      "Figma",
+      "Postman"
+    ],
+    "languages": [
+      "JavaScript",
+      "TypeScript",
+      "HTML5",
+      "CSS3",
+      "SQL"
+    ]
+  },
+  "projects": [
+    {
+      "name": "Portfolio Website",
+      "description": "A modern, interactive portfolio built with Next.js and GSAP.",
+      "tech": ["Next.js", "TypeScript", "GSAP", "Tailwind"],
+      "link": "https://masrafi.dev"
+    },
+    {
+      "name": "E-commerce Dashboard",
+      "description": "A high-performance admin panel for tracking sales and inventory.",
+      "tech": ["React", "Zustand", "Prisma", "PostgreSQL"],
+      "link": "https://github.com/masrafi-000/dashboard"
+    },
+    {
+      "name": "AI Content Generator",
+      "description": "Integration of Gemini API for automated content creation.",
+      "tech": ["Next.js", "Google AI SDK", "TypeScript"],
+      "link": "https://github.com/masrafi-000/ai-gen"
+    }
+  ],
+  "socials": [
+    { "platform": "GitHub", "url": "https://github.com/masrafi-000" },
+    { "platform": "LinkedIn", "url": "https://linkedin.com/in/masrafi" },
+    { "platform": "Twitter", "url": "https://twitter.com/masrafi" }
+  ],
+  "contact": {
+    "email": "hello@masrafi.dev",
+    "phone": "+880 1XXX-XXXXXX",
+    "address": "Dhaka, Bangladesh"
+  }
+}

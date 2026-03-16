@@ -7,6 +7,8 @@ import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { LanguageSwitcher } from "./language-switcher";
 import MasrafiLogo from "./logo";
+import { useTerminalStore } from "@/store/terminal-store";
+import { Terminal as TerminalIcon } from "lucide-react";
 
 function HamburgerButton({
   isOpen,
@@ -72,6 +74,7 @@ function HamburgerButton({
 export const Navbar = () => {
   const t = useTranslations("Navbar");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { toggleTerminal } = useTerminalStore();
 
   const headerRef = useRef<HTMLElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -199,7 +202,14 @@ export const Navbar = () => {
           </nav>
 
           {/* Controls - Desktop Only */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-4">
+            <button
+               onClick={toggleTerminal}
+               className="p-2 text-muted-foreground hover:text-primary transition-all bg-primary/5 hover:bg-primary/10 rounded-full border border-primary/10 hover:border-primary/30"
+               title="Open Terminal"
+            >
+              <TerminalIcon className="w-4 h-4" />
+            </button>
             <LanguageSwitcher />
             <ToggleTheme animationType="circle-spread" className="scale-90" />
           </div>

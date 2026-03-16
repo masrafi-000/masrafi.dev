@@ -9,13 +9,19 @@ import gsap from "gsap";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import hero from "../../public/images/hero.png";
+import { AnimatePresence, motion } from "framer-motion";
+import { useTerminalStore } from "@/store/terminal-store";
+import { Terminal as TerminalIcon } from "lucide-react";
+import Terminal from "@/components/custom/terminal";
+import modernHero from "@/public/images/hero.png";
 
 export const Hero = () => {
   const t = useTranslations("Hero");
   const containerRef = useRef<HTMLElement>(null);
   const textElementsRef = useRef<HTMLElement[]>([]);
   const imageRef = useRef<HTMLDivElement>(null);
+  const terminalRef = useRef<HTMLDivElement>(null);
+  const { isOpen, isMinimized, setMinimized, openTerminal } = useTerminalStore();
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -37,6 +43,16 @@ export const Hero = () => {
         { opacity: 1, scale: 1, y: 0, duration: 1, ease: "power2.out" },
         "-=0.5",
       );
+    }
+
+    // Terminal Entrance
+    if (terminalRef.current) {
+        tl.fromTo(
+            terminalRef.current,
+            { opacity: 0, x: 50, scale: 0.8 },
+            { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: "back.out(1.7)" },
+            "-=0.7"
+        );
     }
   }, []);
 
@@ -60,7 +76,7 @@ export const Hero = () => {
       </div>
 
       <Container variant="default" className=" z-10 relative">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center w-full ">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full ">
           {/* Left Content Column */}
           <div className="flex flex-col gap-6 w-full px-4 py-4 relative z-20">
             {/* Modern Subtitle Badge */}
@@ -133,23 +149,26 @@ export const Hero = () => {
                 size="lg"
                 variant="outline"
                 className="w-full sm:w-auto px-8 text-base h-12 bg-background/50 backdrop-blur-sm border-2 border-border hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all duration-300"
+                onClick={openTerminal}
               >
                 {t("secondaryButton")}
               </Button>
             </div>
           </div>
 
-          {/* Right Image Column (Frameless, integrated look) */}
-          <div className="relative h-full flex justify-center items-center lg:justify-end z-10 mt-10 lg:mt-0 lg:order-last">
-            <div
-              ref={imageRef}
-              className="relative w-full max-w-[280px] sm:max-w-[380px] md:max-w-[420px] lg:max-w-[500px] aspect-square lg:aspect-4/5 flex items-center justify-center"
-            >
-              <div className="absolute inset-0 bg-linear-to-tr from-primary/20 to-transparent dark:from-primary/10  blur-[80px] opacity-60" />
-              <div className="relative z-10 w-full h-full pointer-events-none select-none">
+          {/* Right Column: Combined Image and Terminal */}
+          <div className="relative h-full flex justify-center items-center lg:justify-end z-10 mt-10 lg:mt-0">
+            <div className="relative w-full max-w-[600px] aspect-square flex items-center justify-center">
+              
+              {/* Image with lower opacity when terminal is present for a professional look */}
+              <div
+                ref={imageRef}
+                className={`relative z-10 w-full h-full pointer-events-none select-none transition-opacity duration-500 ${isOpen && !isMinimized ? 'opacity-40 blur-xs' : 'opacity-100'}`}
+              >
+                <div className="absolute inset-0 bg-linear-to-tr from-primary/20 to-transparent dark:from-primary/10 blur-[80px] opacity-60" />
                 <Image
-                  src={hero}
-                  alt="Developer Illustration"
+                  src={modernHero}
+                  alt="Modern Frontend Development Workspace"
                   fill
                   className="object-contain drop-shadow-2xl relative z-10"
                   priority
@@ -157,53 +176,36 @@ export const Hero = () => {
                 />
               </div>
 
-              {/* Floating Tech Badges */}
-              <div className="absolute top-[10%] left-0 sm:-left-[5%] lg:-left-[15%] z-20 animate-[bounce_3s_ease-in-out_infinite]">
-                <div className="flex items-center gap-2 bg-background/80 backdrop-blur-md border border-border shadow-lg rounded-full  px-3 py-2 sm:px-4">
-                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#61DAFB]/10 flex items-center justify-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="-11.5 -10.23174 23 20.46348"
-                    >
-                      <circle cx="0" cy="0" r="2.05" fill="#61dafb" />
-                      <g stroke="#61dafb" strokeWidth="1" fill="none">
-                        <ellipse rx="11" ry="4.2" />
-                        <ellipse rx="11" ry="4.2" transform="rotate(60)" />
-                        <ellipse rx="11" ry="4.2" transform="rotate(120)" />
-                      </g>
-                    </svg>
-                  </div>
-                  <span className="text-xs sm:text-sm font-semibold tracking-tight text-foreground">
-                    React.js
-                  </span>
-                </div>
-              </div>
+              {/* Terminal Overlay - Now using Portals for global z-index dominance */}
+              <AnimatePresence>
+                {isOpen && !isMinimized && <Terminal />}
+              </AnimatePresence>
 
-              <div className="absolute top-[40%] right-0 sm:-right-[5%] lg:-right-[10%] xl:-right-[15%] z-20 animate-[bounce_4s_ease-in-out_infinite_1s]">
-                <div className="flex items-center gap-2 bg-background/80 backdrop-blur-md border border-border shadow-md rounded-full   px-3 py-2 sm:px-4">
-                  <div className="w-5 h-5 sm:w-6 sm:h-6  rounded-full bg-foreground flex items-center justify-center">
-                    <span className="text-[10px] sm:text-xs  font-bold text-background">
-                      N
+              {/* Minimized Terminal Pill */}
+              <AnimatePresence>
+                {isOpen && isMinimized && (
+                  <motion.div
+                    drag
+                    dragMomentum={false}
+                    dragElastic={0}
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ type: "spring", damping: 20, stiffness: 200 }}
+                    onClick={() => setMinimized(false)}
+                    className="absolute bottom-10 right-10 z-9999 bg-[#1a1a1a] border border-primary/20 px-4 py-2 rounded-full cursor-pointer shadow-xl hover:bg-[#222] transition-all flex items-center gap-3"
+                  >
+                    <div className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </div>
+                    <span className="text-xs text-white font-mono flex items-center gap-2">
+                       <TerminalIcon className="w-3 h-3 text-primary" />
+                       Terminal (Minimized)
                     </span>
-                  </div>
-                  <span className="text-xs sm:text-sm font-semibold tracking-tight text-foreground">
-                    Next.js
-                  </span>
-                </div>
-              </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-              <div className="absolute bottom-[20%] left-0 sm:-left-[5%] lg:left-[5%] z-20 animate-[bounce_3.5s_ease-in-out_infinite_0.5s]">
-                <div className="flex items-center gap-2 bg-background/80 backdrop-blur-md border border-border shadow-lg rounded-full  px-3 py-2 sm:px-4">
-                  <div className="w-5 h-5 sm:w-6 sm:h-6  bg-[#3178C6] flex items-center justify-center">
-                    <span className="text-[10px] sm:text-xs font-bold text-white">
-                      TS
-                    </span>
-                  </div>
-                  <span className="text-xs sm:text-sm font-semibold tracking-tight text-foreground">
-                    TypeScript
-                  </span>
-                </div>
-              </div>
             </div>
           </div>
         </div>
