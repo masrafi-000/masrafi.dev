@@ -64,5 +64,21 @@
     "contributions": "Contribution Graph",
     "viewProfile": "View GitHub Profile",
     "updatedAuth": "Updated at"
+  },
+  "Projects": {
+    "sectionTitle": "Featured Workspace",
+    "sectionSubtitle": "A selection of my most impactful digital builds and architectural experiments.",
+    "viewAll": "View All Projects",
+    "explore": "Explore Case Study",
+    "liveDemo": "Live Demo",
+    "sourceCode": "Source Code",
+    "techStack": "Technologies Used",
+    "aboutProject": "About the Project",
+    "all": "All",
+    "projects": "Projects",
+    "archiveDescription": "A complete archive of my engineering work, from commercial applications to experimental prototypes.",
+    "viewProject": "View Project",
+    "backToProjects": "Back to Projects",
+    "projectGallery": "Project Gallery"
   }
 }

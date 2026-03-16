@@ -1,0 +1,53 @@
+[
+  {
+    "id": "1",
+    "slug": "ecommerce-dashboard",
+    "title": "E-commerce Admin Dashboard",
+    "description": "A high-performance admin panel for tracking sales and inventory.",
+    "longDescription": "This comprehensive dashboard built for e-commerce managers provides real-time insights into sales performance, inventory levels, and customer behavior. It features complex data visualizations using Chart.js, a robust state management system with Zustand, and a high-performance backend powered by Prisma and PostgreSQL.",
+    "tech": ["React", "Zustand", "Prisma", "PostgreSQL", "Tailwind CSS"],
+    "imageSrc": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
+    "featured": true,
+    "links": {
+      "live": "https://dashboard-demo.masrafi.dev",
+      "github": "https://github.com/masrafi-000/dashboard"
+    },
+    "gallery": [
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "2",
+    "slug": "ai-content-generator",
+    "title": "AI Content Studio",
+    "description": "Integration of Gemini API for automated content creation.",
+    "longDescription": "AI Content Studio is a powerful tool designed for creators. By leveraging the Google Gemini API, it allows users to generate high-quality blog posts, social media captions, and product descriptions in seconds. The application features a sleek, intuitive UI built with Next.js and Framer Motion.",
+    "tech": ["Next.js", "Google AI SDK", "TypeScript", "Framer Motion"],
+    "imageSrc": "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2532&auto=format&fit=crop",
+    "featured": true,
+    "links": {
+      "live": "https://ai-studio.masrafi.dev",
+      "github": "https://github.com/masrafi-000/ai-gen"
+    },
+    "gallery": [
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2532&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "3",
+    "slug": "portfolio-v1",
+    "title": "Minimalist Portfolio v1",
+    "description": "A modern, interactive portfolio built with Next.js and GSAP.",
+    "longDescription": "My previous portfolio iteration focused on pure minimalist design and high-end animations. It showcased the power of GSAP for orchestrating complex entrance sequences and ScrollTrigger for interactive storytelling. This project laid the foundation for my current design philosophy.",
+    "tech": ["Next.js", "TypeScript", "GSAP", "Tailwind CSS"],
+    "imageSrc": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2372&auto=format&fit=crop",
+    "featured": true,
+    "links": {
+      "live": "https://v1.masrafi.dev",
+      "github": "https://github.com/masrafi-000/portfolio-v1"
+    },
+    "gallery": [
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2372&auto=format&fit=crop"
+    ]
+  }
+]

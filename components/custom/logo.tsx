@@ -109,54 +109,66 @@ export default function MasrafiLogo() {
           font-size: 64px;
           fill: url(#logoGradient);
           stroke: url(#logoGradient);
-          stroke-width: 1;
+          stroke-width: 0.5;
+          filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
         .logo-underline {
-          stroke: #c96442;
-          stroke-width: 2;
+          stroke: var(--primary);
+          stroke-width: 2.5;
           stroke-linecap: round;
+          filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
         }
 
         .logo-dot {
-          fill: #c96442;
+          fill: var(--primary);
+          filter: drop-shadow(0 1px 3px rgba(var(--primary), 0.5));
         }
       `}</style>
 
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 10 420 90"
+        viewBox="0 10 420 95"
         width="420"
-        height="90"
+        height="95"
         style={{ background: "transparent" }}
-        className="w-36 sm:w-44 md:w-56 h-auto drop-shadow-md"
+        className="w-36 sm:w-44 md:w-56 h-auto drop-shadow-xl"
       >
         <defs>
-          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop
               offset="0%"
-              style={{ stopColor: "#b05730", stopOpacity: 1 }}
+              style={{ stopColor: "var(--primary)", stopOpacity: 1 }}
+            />
+            <stop
+              offset="50%"
+              style={{ stopColor: "var(--primary)", stopOpacity: 0.9 }}
             />
             <stop
               offset="100%"
-              style={{ stopColor: "#c96442", stopOpacity: 1 }}
+              style={{ stopColor: "var(--primary)", stopOpacity: 0.7 }}
             />
           </linearGradient>
+          
+          <filter id="premium-glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="1.5" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
         </defs>
 
-        <g>
+        <g filter="url(#premium-glow)">
           <text ref={textRef} x="20" y="75" className="logo-text">
             Masrafi.dev
           </text>
 
           <path
             ref={pathRef}
-            d="M25 90 Q 150 110 400 80"
+            d="M25 90 C 80 105, 250 105, 400 85"
             fill="none"
             className="logo-underline"
           />
 
-          <circle ref={dotRef} cx="395" cy="77" r="5" className="logo-dot" />
+          <circle ref={dotRef} cx="395" cy="80" r="5" className="logo-dot" />
         </g>
       </svg>
     </div>
