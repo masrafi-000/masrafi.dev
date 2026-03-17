@@ -17,6 +17,8 @@ export const Journey = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const headingRef = useRef<HTMLDivElement>(null);
+  const orb1Ref = useRef<HTMLDivElement>(null);
+  const orb2Ref = useRef<HTMLDivElement>(null);
 
   const journeyItems = [
     {
@@ -90,6 +92,30 @@ export const Journey = () => {
         );
       }
 
+      // 3. Background Parallax
+      if (orb1Ref.current) {
+        gsap.to(orb1Ref.current, {
+          y: 100,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2,
+          }
+        });
+      }
+      if (orb2Ref.current) {
+        gsap.to(orb2Ref.current, {
+          y: -100,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2,
+          }
+        });
+      }
+
     }, sectionRef);
 
     return () => ctx.revert();
@@ -112,8 +138,8 @@ export const Journey = () => {
       
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none z-0 opacity-40">
-        <div className="absolute top-[30%] left-[-10%] w-[500px] h-[500px] bg-primary/10  blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-purple-500/10 dark:bg-purple-900/10  blur-[100px]" />
+        <div ref={orb1Ref} className="absolute top-[30%] left-[-10%] w-[500px] h-[500px] bg-primary/10  blur-[120px]" />
+        <div ref={orb2Ref} className="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-purple-500/10 dark:bg-purple-900/10  blur-[100px]" />
       </div>
 
       <Container variant="default" className="relative z-10 w-full">
@@ -125,7 +151,7 @@ export const Journey = () => {
           {/* Top Row: Full Width Heading Card */}
           <div 
             ref={headingRef} 
-            className="w-full bg-background/60 backdrop-blur-xl p-6 sm:p-10 md:p-14 mb-6 text-center hover:bg-background/80 hover:border-primary/30 transition-all duration-500 group relative overflow-hidden"
+            className="w-full bg-background/60 backdrop-blur-xl p-6 sm:p-10 md:p-14 mb-6 text-center hover:bg-background/80 hover:border-primary/30 transition-[background-color,border-color] duration-500 group relative overflow-hidden"
           >
             {/* Glowing hover accent */}
             <div className="absolute inset-0 bg-linear-to-t from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
@@ -146,7 +172,7 @@ export const Journey = () => {
               <div
                 key={item.id}
                 ref={addToRefs}
-                className={`relative bg-background/60 backdrop-blur-xl border border-border/40 p-8 md:p-10 lg:p-12 hover:bg-background/90 hover:border-primary/50 transition-all duration-500 shadow-md hover:-translate-y-2 hover:shadow-2xl overflow-hidden  group flex flex-col justify-between ${item.className}`}
+                className={`relative bg-background/60 backdrop-blur-xl border border-border/40 p-8 md:p-10 lg:p-12 hover:bg-background/90 hover:border-primary/50 transition-[background-color,border-color,transform,shadow] duration-500 shadow-md hover:-translate-y-2 hover:shadow-2xl overflow-hidden  group flex flex-col justify-between ${item.className}`}
               >
                 {/* Glowing hover accent */}
                 <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-700 pointer-events-none" />

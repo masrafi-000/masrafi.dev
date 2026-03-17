@@ -17,6 +17,7 @@ import { useEffect, useRef } from "react";
 import { GitHubCalendar } from "react-github-calendar";
 import { Button } from "../ui/button";
 import Section from "./section";
+import { AnimateHeight } from "@/components/custom/animate-height";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -48,6 +49,7 @@ export const GitHubActivity = () => {
 
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
+  const orbRef = useRef<HTMLDivElement>(null);
 
   // Handle GSAP animations
   useEffect(() => {
@@ -79,6 +81,19 @@ export const GitHubActivity = () => {
             },
           }
         );
+
+        // Background Orb Parallax
+        if (orbRef.current) {
+          gsap.to(orbRef.current, {
+            y: 150,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.2,
+            }
+          });
+        }
       }, sectionRef);
     }, 150);
 
@@ -101,7 +116,7 @@ export const GitHubActivity = () => {
       
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none z-0 opacity-40">
-        <div className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-primary/10 blur-[120px]" />
+        <div ref={orbRef} className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-primary/10 blur-[120px]" />
       </div>
 
       <Container variant="default"  className="relative z-10 px-4">
@@ -120,209 +135,211 @@ export const GitHubActivity = () => {
           </div>
         )}
 
-        {isLoading || !data ? (
-          /* Detailed Loading Skeletons matching the Bento Grid structure */
-          <div className="flex flex-col gap-6 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              
-              {/* Profile Card Skeleton */}
-              <Card className="bg-background/60 backdrop-blur-xl border-border/40  shadow-sm lg:col-span-1 flex flex-col items-center text-center p-0 gap-0">
-                <div className="flex flex-col items-center text-center pb-2 pt-8 px-6 w-full">
-                  <Skeleton className="w-24 h-24 rounded-full mb-4" />
-                  <Skeleton className="h-8 w-3/4 mb-2 rounded-sm" />
-                  <Skeleton className="h-4 w-5/6 mb-1 rounded-sm" />
-                  <Skeleton className="h-4 w-4/6 rounded-sm" />
-                </div>
-                <CardContent className="flex flex-col items-center justify-center grow pt-6 w-full">
-                  <div className="flex gap-4 w-full justify-center">
-                    <div className="flex flex-col items-center gap-2">
-                      <Skeleton className="h-8 w-12 rounded-sm" />
-                      <Skeleton className="h-3 w-20 rounded-sm" />
-                    </div>
-                    <div className="w-px bg-border/50 h-full min-h-[40px]" />
-                    <div className="flex flex-col items-center gap-2">
-                      <Skeleton className="h-8 w-12 rounded-sm" />
-                      <Skeleton className="h-3 w-20 rounded-sm" />
-                    </div>
+        <AnimateHeight>
+          {isLoading || !data ? (
+            /* Detailed Loading Skeletons matching the Bento Grid structure */
+            <div className="flex flex-col gap-6 w-full">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                {/* Profile Card Skeleton */}
+                <Card className="bg-background/60 backdrop-blur-xl border-border/40  shadow-sm lg:col-span-1 flex flex-col items-center text-center p-0 gap-0">
+                  <div className="flex flex-col items-center text-center pb-2 pt-8 px-6 w-full">
+                    <Skeleton className="w-24 h-24 rounded-full mb-4" />
+                    <Skeleton className="h-8 w-3/4 mb-2 rounded-sm" />
+                    <Skeleton className="h-4 w-5/6 mb-1 rounded-sm" />
+                    <Skeleton className="h-4 w-4/6 rounded-sm" />
                   </div>
-                </CardContent>
-                <CardFooter className="pb-8 pt-4 w-full">
-                  <Skeleton className="w-full h-12 rounded-xl" />
-                </CardFooter>
-              </Card>
-
-              {/* Contribution Graph Skeleton */}
-              <Card className="bg-background/60 backdrop-blur-xl border-border/40 shadow-sm lg:col-span-2 flex flex-col justify-center overflow-hidden p-0 gap-0">
-                <CardHeader className="flex flex-row items-center gap-3 pb-6 pt-8 px-8 w-full">
-                  <Skeleton className="w-6 h-6 rounded-full shrink-0" />
-                  <Skeleton className="h-8 w-40 rounded-sm" />
-                </CardHeader>
-                <CardContent className="px-8 pb-8 overflow-hidden w-full h-[200px] flex items-center justify-center">
-                  <Skeleton className="w-full h-full rounded-xl" />
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Recent Repositories Skeleton Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, i) => (
-                <Card key={i} className="h-full bg-background/60 backdrop-blur-xl border-border/40 shadow-sm flex flex-col relative overflow-hidden group/card p-0 gap-0">
-                  <CardHeader className="flex flex-row justify-between items-start pt-6 px-6 pb-2 gap-2 relative z-10 w-full space-y-0">
-                    <div className="flex items-center gap-2 w-full">
-                      <Skeleton className="w-5 h-5 rounded-full shrink-0" />
-                      <Skeleton className="h-6 w-3/4 rounded-sm" />
+                  <CardContent className="flex flex-col items-center justify-center grow pt-6 w-full">
+                    <div className="flex gap-4 w-full justify-center">
+                      <div className="flex flex-col items-center gap-2">
+                        <Skeleton className="h-8 w-12 rounded-sm" />
+                        <Skeleton className="h-3 w-20 rounded-sm" />
+                      </div>
+                      <div className="w-px bg-border/50 h-full min-h-[40px]" />
+                      <div className="flex flex-col items-center gap-2">
+                        <Skeleton className="h-8 w-12 rounded-sm" />
+                        <Skeleton className="h-3 w-20 rounded-sm" />
+                      </div>
                     </div>
-                    <Skeleton className="w-12 h-6 rounded-full shrink-0" />
-                  </CardHeader>
-                  <CardContent className="px-6 py-2 grow flex flex-col relative z-10 gap-2">
-                    <Skeleton className="h-4 w-full rounded-sm" />
-                    <Skeleton className="h-4 w-5/6 rounded-sm" />
                   </CardContent>
-                  <CardFooter className="px-6 pb-6 pt-2 flex justify-between items-center mt-auto w-full">
-                    <Skeleton className="h-4 w-1/3 rounded-sm" />
-                    <Skeleton className="h-4 w-1/4 rounded-sm" />
+                  <CardFooter className="pb-8 pt-4 w-full">
+                    <Skeleton className="w-full h-12 rounded-xl" />
                   </CardFooter>
                 </Card>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-6">
-            {/* Top Row: User Stats and Contribution Graph */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              
-              {/* Left: Profile Card */}
-              <Card 
-                ref={addToRefs}
-                className="bg-background/60 backdrop-blur-xl border-border/40 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-500 lg:col-span-1 flex flex-col items-center text-center group overflow-hidden p-0 gap-0"
-              >
-                <div className="flex flex-col items-center text-center pb-2 pt-8 px-6">
-                  <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-background shadow-lg mb-4 group-hover:scale-105 transition-transform duration-500 shrink-0">
-                   
-                    <Image src={data.user.avatar_url} alt={data.user.login} width={100} height={100} className="w-full h-full object-cover" />
-                  </div>
-                  <CardTitle className="text-2xl font-bold font-serif text-foreground mb-2">
-                    {data.user.login}
-                  </CardTitle>
-                  <CardDescription className="max-w-xs leading-relaxed text-sm">
-                    {data.user.bio}
-                  </CardDescription>
-                </div>
-                
-                <CardContent className="flex flex-col items-center justify-center grow pt-6">
-                  <div className="flex gap-4 w-full justify-center">
-                    <div className="flex flex-col items-center">
-                      <span className="text-2xl font-bold text-foreground">{data.user.public_repos}</span>
-                      <span className="text-xs text-muted-foreground uppercase tracking-wider">{t("publicRepos")}</span>
-                    </div>
-                    <div className="w-px bg-border/50 h-full min-h-[40px]" />
-                    <div className="flex flex-col items-center">
-                      <span className="text-2xl font-bold text-foreground">{data.user.followers}</span>
-                      <span className="text-xs text-muted-foreground uppercase tracking-wider">{t("followers")}</span>
-                    </div>
-                  </div>
-                </CardContent>
 
-                <CardFooter className="pb-8 pt-4">
-                  <Link href={data.user.html_url} target="_blank" rel="noopener noreferrer" className="w-full">
-                    <Button className="w-full py-3 px-6 bg-primary text-center text-primary-foreground font-medium  hover:opacity-90 transition-opacity">
-                      {t("viewProfile")}
-                    </Button>
-                  </Link>
-                </CardFooter>
-              </Card>
+                {/* Contribution Graph Skeleton */}
+                <Card className="bg-background/60 backdrop-blur-xl border-border/40 shadow-sm lg:col-span-2 flex flex-col justify-center overflow-hidden p-0 gap-0">
+                  <CardHeader className="flex flex-row items-center gap-3 pb-6 pt-8 px-8 w-full">
+                    <Skeleton className="w-6 h-6 rounded-full shrink-0" />
+                    <Skeleton className="h-8 w-40 rounded-sm" />
+                  </CardHeader>
+                  <CardContent className="px-8 pb-8 overflow-hidden w-full h-[200px] flex items-center justify-center">
+                    <Skeleton className="w-full h-full rounded-xl" />
+                  </CardContent>
+                </Card>
+              </div>
 
-              {/* Right: Contribution Graph built natively bypassing iframe */}
-              <Card 
-                ref={addToRefs}
-                className="bg-background/60 backdrop-blur-xl border-border/40  shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-500 lg:col-span-2 flex flex-col justify-center overflow-hidden p-0 gap-0"
-              >
-                <CardHeader className="flex flex-row items-center gap-3 pb-6 pt-8 px-8">
-                  <RepoIcon className="w-6 h-6 text-primary shrink-0" />
-                  <CardTitle className="text-2xl font-bold font-serif text-foreground m-0">
-                    {t("contributions")}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="px-4 sm:px-8 pb-8 overflow-x-auto w-full">
-                  {/* 
-                    Using react-github-calendar explicitly with the masrafi-000 username 
-                    It handles rendering the beautiful SVG grids dynamically 
-                  */}
-                  <div className="w-full min-w-[700px] flex justify-center lg:justify-start">
-                    <GitHubCalendar 
-                      username="masrafi-000" 
-                      colorScheme={isDark ? "dark" : "light"}
-                      fontSize={12}
-                      blockSize={12}
-                      blockMargin={4}
-                      theme={{
-                        dark: ['#1e1e2d', '#392E5C', '#553784', '#7843b0', '#9b5de5'],
-                        light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39']
-                      }}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Bottom Row: Recent Repositories Grid */}
-            <div>
-              <h3 className="text-2xl font-bold font-serif mb-6 mt-8 text-foreground ml-2">
-                {t("recentRepos")}
-              </h3>
+              {/* Recent Repositories Skeleton Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {data.repos.map((repo: { id: number, name: string, description: string, html_url: string, stargazers_count: number, language: string, updated_at: string }) => (
-                  <Link 
-                    key={repo.id} 
-                    href={repo.html_url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="block h-full group"
-                  >
-                    <Card 
-                      ref={addToRefs}
-                      className="h-full bg-background/60 backdrop-blur-xl border-border/40 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-primary/50 transition-all duration-300 flex flex-col relative overflow-hidden group/card p-0 gap-0"
-                    >
-                      {/* Glow on hover */}
-                      <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity pointer-events-none" />
-
-                      <CardHeader className="flex flex-row justify-between items-start pt-6 px-6 pb-2 gap-2 relative z-10 w-full space-y-0">
-                        <div className="flex items-center gap-2 text-primary overflow-hidden min-w-0">
-                          <RepoIcon className="w-5 h-5 shrink-0" />
-                          <CardTitle className="text-lg truncate" title={repo.name}>
-                            {repo.name}
-                          </CardTitle>
-                        </div>
-                        <Badge variant="outline" className="flex gap-1 items-center rounded-full bg-background shrink-0 whitespace-nowrap">
-                          <StarIcon className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                          {repo.stargazers_count}
-                        </Badge>
-                      </CardHeader>
-                      
-                      <CardContent className="px-6 py-2 grow flex flex-col relative z-10">
-                        <CardDescription className="line-clamp-2 text-sm">
-                          {repo.description || "No description provided."}
-                        </CardDescription>
-                      </CardContent>
-
-                      <CardFooter className="px-6 pb-6 pt-2 flex justify-between items-center text-xs text-muted-foreground relative z-10 mt-auto w-full">
-                        <div className="flex items-center gap-1.5 align-middle w-1/2 overflow-hidden truncate">
-                          {repo.language && (
-                            <>
-                              <span className="w-2.5 h-2.5 rounded-full bg-primary/80 shrink-0" />
-                              <span className="truncate">{repo.language}</span>
-                            </>
-                          )}
-                        </div>
-                        <span className="shrink-0">{t("updatedAuth")} {new Date(repo.updated_at).toLocaleDateString(locale)}</span>
-                      </CardFooter>
-                    </Card>
-                  </Link>
+                {[...Array(6)].map((_, i) => (
+                  <Card key={i} className="h-full bg-background/60 backdrop-blur-xl border-border/40 shadow-sm flex flex-col relative overflow-hidden group/card p-0 gap-0">
+                    <CardHeader className="flex flex-row justify-between items-start pt-6 px-6 pb-2 gap-2 relative z-10 w-full space-y-0">
+                      <div className="flex items-center gap-2 w-full">
+                        <Skeleton className="w-5 h-5 rounded-full shrink-0" />
+                        <Skeleton className="h-6 w-3/4 rounded-sm" />
+                      </div>
+                      <Skeleton className="w-12 h-6 rounded-full shrink-0" />
+                    </CardHeader>
+                    <CardContent className="px-6 py-2 grow flex flex-col relative z-10 gap-2">
+                      <Skeleton className="h-4 w-full rounded-sm" />
+                      <Skeleton className="h-4 w-5/6 rounded-sm" />
+                    </CardContent>
+                    <CardFooter className="px-6 pb-6 pt-2 flex justify-between items-center mt-auto w-full">
+                      <Skeleton className="h-4 w-1/3 rounded-sm" />
+                      <Skeleton className="h-4 w-1/4 rounded-sm" />
+                    </CardFooter>
+                  </Card>
                 ))}
               </div>
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="flex flex-col gap-6">
+              {/* Top Row: User Stats and Contribution Graph */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                {/* Left: Profile Card */}
+                <Card 
+                  ref={addToRefs}
+                  className="bg-background/60 backdrop-blur-xl border-border/40 shadow-sm hover:shadow-xl hover:border-primary/30 transition-[background-color,border-color,box-shadow] duration-500 lg:col-span-1 flex flex-col items-center text-center group overflow-hidden p-0 gap-0"
+                >
+                  <div className="flex flex-col items-center text-center pb-2 pt-8 px-6">
+                    <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-background shadow-lg mb-4 group-hover:scale-105 transition-transform duration-500 shrink-0">
+                     
+                      <Image src={data.user.avatar_url} alt={data.user.login} width={100} height={100} className="w-full h-full object-cover" />
+                    </div>
+                    <CardTitle className="text-2xl font-bold font-serif text-foreground mb-2">
+                      {data.user.login}
+                    </CardTitle>
+                    <CardDescription className="max-w-xs leading-relaxed text-sm">
+                      {data.user.bio}
+                    </CardDescription>
+                  </div>
+                  
+                  <CardContent className="flex flex-col items-center justify-center grow pt-6">
+                    <div className="flex gap-4 w-full justify-center">
+                      <div className="flex flex-col items-center">
+                        <span className="text-2xl font-bold text-foreground">{data.user.public_repos}</span>
+                        <span className="text-xs text-muted-foreground uppercase tracking-wider">{t("publicRepos")}</span>
+                      </div>
+                      <div className="w-px bg-border/50 h-full min-h-[40px]" />
+                      <div className="flex flex-col items-center">
+                        <span className="text-2xl font-bold text-foreground">{data.user.followers}</span>
+                        <span className="text-xs text-muted-foreground uppercase tracking-wider">{t("followers")}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+
+                  <CardFooter className="pb-8 pt-4">
+                    <Link href={data.user.html_url} target="_blank" rel="noopener noreferrer" className="w-full">
+                      <Button className="w-full py-3 px-6 bg-primary text-center text-primary-foreground font-medium  hover:opacity-90 transition-opacity">
+                        {t("viewProfile")}
+                      </Button>
+                    </Link>
+                  </CardFooter>
+                </Card>
+
+                {/* Right: Contribution Graph built natively bypassing iframe */}
+                <Card 
+                  ref={addToRefs}
+                  className="bg-background/60 backdrop-blur-xl border-border/40  shadow-sm hover:shadow-xl hover:border-primary/30 transition-[background-color,border-color,box-shadow] duration-500 lg:col-span-2 flex flex-col justify-center overflow-hidden p-0 gap-0"
+                >
+                  <CardHeader className="flex flex-row items-center gap-3 pb-6 pt-8 px-8">
+                    <RepoIcon className="w-6 h-6 text-primary shrink-0" />
+                    <CardTitle className="text-2xl font-bold font-serif text-foreground m-0">
+                      {t("contributions")}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="px-4 sm:px-8 pb-8 overflow-x-auto w-full">
+                    {/* 
+                      Using react-github-calendar explicitly with the masrafi-000 username 
+                      It handles rendering the beautiful SVG grids dynamically 
+                    */}
+                    <div className="w-full min-w-[700px] flex justify-center lg:justify-start">
+                      <GitHubCalendar 
+                        username="masrafi-000" 
+                        colorScheme={isDark ? "dark" : "light"}
+                        fontSize={12}
+                        blockSize={12}
+                        blockMargin={4}
+                        theme={{
+                          dark: ['#1e1e2d', '#392E5C', '#553784', '#7843b0', '#9b5de5'],
+                          light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39']
+                        }}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Bottom Row: Recent Repositories Grid */}
+              <div>
+                <h3 className="text-2xl font-bold font-serif mb-6 mt-8 text-foreground ml-2">
+                  {t("recentRepos")}
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {data.repos.map((repo: { id: number, name: string, description: string, html_url: string, stargazers_count: number, language: string, updated_at: string }) => (
+                    <Link 
+                      key={repo.id} 
+                      href={repo.html_url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="block h-full group"
+                    >
+                      <Card 
+                        ref={addToRefs}
+                        className="h-full bg-background/60 backdrop-blur-xl border-border/40 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-primary/50 transition-[background-color,border-color,transform,box-shadow] duration-300 flex flex-col relative overflow-hidden group/card p-0 gap-0"
+                      >
+                        {/* Glow on hover */}
+                        <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity pointer-events-none" />
+
+                        <CardHeader className="flex flex-row justify-between items-start pt-6 px-6 pb-2 gap-2 relative z-10 w-full space-y-0">
+                          <div className="flex items-center gap-2 text-primary overflow-hidden min-w-0">
+                            <RepoIcon className="w-5 h-5 shrink-0" />
+                            <CardTitle className="text-lg truncate" title={repo.name}>
+                              {repo.name}
+                            </CardTitle>
+                          </div>
+                          <Badge variant="outline" className="flex gap-1 items-center rounded-full bg-background shrink-0 whitespace-nowrap">
+                            <StarIcon className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+                            {repo.stargazers_count}
+                          </Badge>
+                        </CardHeader>
+                        
+                        <CardContent className="px-6 py-2 grow flex flex-col relative z-10">
+                          <CardDescription className="line-clamp-2 text-sm">
+                            {repo.description || "No description provided."}
+                          </CardDescription>
+                        </CardContent>
+
+                        <CardFooter className="px-6 pb-6 pt-2 flex justify-between items-center text-xs text-muted-foreground relative z-10 mt-auto w-full">
+                          <div className="flex items-center gap-1.5 align-middle w-1/2 overflow-hidden truncate">
+                            {repo.language && (
+                              <>
+                                <span className="w-2.5 h-2.5 rounded-full bg-primary/80 shrink-0" />
+                                <span className="truncate">{repo.language}</span>
+                              </>
+                            )}
+                          </div>
+                          <span className="shrink-0">{t("updatedAuth")} {new Date(repo.updated_at).toLocaleDateString(locale)}</span>
+                        </CardFooter>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </AnimateHeight>
       </Container>
     </Section>
   );

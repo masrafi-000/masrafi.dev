@@ -6,6 +6,7 @@ import SectionHeading from "@/components/custom/sectionHeading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
@@ -15,45 +16,83 @@ import { Terminal as TerminalIcon } from "lucide-react";
 import Terminal from "@/components/custom/terminal";
 import modernHero from "@/public/images/hero.png";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 export const Hero = () => {
   const t = useTranslations("Hero");
   const containerRef = useRef<HTMLElement>(null);
   const textElementsRef = useRef<HTMLElement[]>([]);
   const imageRef = useRef<HTMLDivElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
+  const orb1Ref = useRef<HTMLDivElement>(null);
+  const orb2Ref = useRef<HTMLDivElement>(null);
   const { isOpen, isMinimized, setMinimized, openTerminal } = useTerminalStore();
 
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const tl = gsap.timeline();
+    const ctx = gsap.context(() => {
+      // 1. Initial Entrance Timeline
+      const tl = gsap.timeline();
 
-    // Stagger text elements
-    tl.fromTo(
-      textElementsRef.current,
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out" },
-    );
-
-    // Fade in and float image
-    if (imageRef.current) {
+      // Stagger text elements
       tl.fromTo(
-        imageRef.current,
-        { opacity: 0, scale: 0.9, y: 20 },
-        { opacity: 1, scale: 1, y: 0, duration: 1, ease: "power2.out" },
-        "-=0.5",
+        textElementsRef.current,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out" },
       );
-    }
 
-    // Terminal Entrance
-    if (terminalRef.current) {
+      // Fade in and float image
+      if (imageRef.current) {
         tl.fromTo(
-            terminalRef.current,
-            { opacity: 0, x: 50, scale: 0.8 },
-            { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: "back.out(1.7)" },
-            "-=0.7"
+          imageRef.current,
+          { opacity: 0, scale: 0.9, y: 20 },
+          { opacity: 1, scale: 1, y: 0, duration: 1, ease: "power2.out" },
+          "-=0.5",
         );
-    }
+      }
+
+      // Terminal Entrance
+      if (terminalRef.current) {
+          tl.fromTo(
+              terminalRef.current,
+              { opacity: 0, x: 50, scale: 0.8 },
+              { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: "back.out(1.7)" },
+              "-=0.7"
+          );
+      }
+
+      // 2. Scroll-linked Parallax for Background Orbs
+      if (orb1Ref.current) {
+        gsap.to(orb1Ref.current, {
+          y: 200,
+          x: 50,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.2,
+          }
+        });
+      }
+
+      if (orb2Ref.current) {
+        gsap.to(orb2Ref.current, {
+          y: -150,
+          x: -30,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.2,
+          }
+        });
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   const addToRefs = (el: HTMLDivElement | null) => {
@@ -71,8 +110,14 @@ export const Hero = () => {
     >
       {/* Modern Background Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-1/4 -left-[10%] w-[500px] h-[500px]   bg-blue-500/10 dark:bg-blue-600/10 blur-[100px]" />
-        <div className="absolute bottom-[-10%] -right-[5%] w-[600px] h-[600px]   bg-purple-500/10 dark:bg-purple-900/10 blur-[120px]" />
+        <div 
+          ref={orb1Ref}
+          className="absolute top-1/4 -left-[10%] w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-600/10 blur-[100px]" 
+        />
+        <div 
+          ref={orb2Ref}
+          className="absolute bottom-[-10%] -right-[5%] w-[600px] h-[600px] bg-purple-500/10 dark:bg-purple-900/10 blur-[120px]" 
+        />
       </div>
 
       <Container variant="default" className=" z-10 relative">
@@ -83,7 +128,7 @@ export const Hero = () => {
             <div ref={addToRefs} className="flex items-start mt-20 2xl:mt-0">
               <Badge
                 variant="outline"
-                className="px-4 py-1.5 text-lg font-medium tracking-widest uppercase bg-primary/5 text-primary border-primary/20 backdrop-blur-md shadow-sm transition-all hover:bg-primary/10 hover:border-primary/30"
+                className="px-4 py-1.5 text-lg font-medium tracking-widest uppercase bg-primary/5 text-primary border-primary/20 backdrop-blur-md shadow-sm transition-[background-color,border-color] hover:bg-primary/10 hover:border-primary/30"
               >
                 <span className="relative flex h-2 w-2 mr-3 ">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full   bg-primary opacity-75"></span>
@@ -109,7 +154,7 @@ export const Hero = () => {
               </p>
 
               {/* Modern Highlight Box */}
-              <div className="group relative flex items-start gap-4 bg-background/30 hover:bg-background/50 backdrop-blur-xl border border-border/40 shadow-sm hover:shadow-md  p-4 sm:p-5 max-w-xl mt-4 transition-all duration-300">
+              <div className="group relative flex items-start gap-4 bg-background/30 hover:bg-background/50 backdrop-blur-xl border border-border/40 shadow-sm hover:shadow-md  p-4 sm:p-5 max-w-xl mt-4 transition-[background-color,box-shadow,border-color] duration-300">
                 <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent  pointer-events-none opacity-50"></div>
                 <div className="relative mt-0.5 shrink-0">
                   <div className="flex items-center justify-center w-8 h-8   bg-primary/10 text-primary ring-1 ring-primary/20">
@@ -141,14 +186,14 @@ export const Hero = () => {
             >
               <Button
                 size="lg"
-                className="w-full sm:w-auto px-8 text-base h-12 shadow-[0_0_20px_rgba(var(--primary),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] hover:-translate-y-1 transition-all duration-300"
+                className="w-full sm:w-auto px-8 text-base h-12 shadow-[0_0_20px_rgba(var(--primary),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] hover:-translate-y-1 transition-[background-color,transform,box-shadow] duration-300"
               >
                 {t("primaryButton")}
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full sm:w-auto px-8 text-base h-12 bg-background/50 backdrop-blur-sm border-2 border-border hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all duration-300"
+                className="w-full sm:w-auto px-8 text-base h-12 bg-background/50 backdrop-blur-sm border-2 border-border hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-[background-color,border-color,color] duration-300"
                 onClick={openTerminal}
               >
                 {t("secondaryButton")}

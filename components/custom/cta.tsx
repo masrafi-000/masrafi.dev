@@ -19,12 +19,13 @@ export const CTA = () => {
   const t = useTranslations("CTA");
   const containerRef = useRef<HTMLElement>(null);
   const textElementsRef = useRef<HTMLElement[]>([]);
+  const orbRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Create the ScrollTrigger animation
     const ctx = gsap.context(() => {
+      // 1. Text Entry Animation
       gsap.fromTo(
         textElementsRef.current,
         { 
@@ -40,14 +41,27 @@ export const CTA = () => {
           willChange: "transform, opacity",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 80%", // Starts animation when top of container hits 80% of viewport
-            toggleActions: "play none none reverse", // Play on enter, reverse on leave back
+            start: "top 80%",
+            toggleActions: "play none none reverse",
           }
         }
       );
+
+      // 2. Background Orb Parallax
+      if (orbRef.current) {
+        gsap.to(orbRef.current, {
+          y: -100,
+          scale: 1.1,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2,
+          }
+        });
+      }
     }, containerRef);
 
-    // Cleanup function
     return () => ctx.revert();
   }, []);
 
@@ -66,7 +80,10 @@ export const CTA = () => {
     >
       {/* Modern Background Orbs for CTA */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 dark:bg-primary/10 blur-[120px] rounded-full" />
+        <div 
+          ref={orbRef}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 dark:bg-primary/10 blur-[120px] rounded-full" 
+        />
       </div>
 
       <Container variant="default" className="relative z-10">
@@ -99,14 +116,14 @@ export const CTA = () => {
           <div ref={addToRefs} className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 w-full">
             <Button
               size="lg"
-              className="w-full sm:w-auto px-8 text-base h-12 shadow-[0_0_20px_rgba(var(--primary),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] hover:-translate-y-1 transition-all duration-300"
+              className="w-full sm:w-auto px-8 text-base h-12 shadow-[0_0_20px_rgba(var(--primary),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] hover:-translate-y-1 transition-[background-color,transform,box-shadow] duration-300"
             >
               {t("primaryButton")}
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="w-full sm:w-auto px-8 text-base h-12 bg-background/50 backdrop-blur-sm border-2 border-border hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all duration-300"
+              className="w-full sm:w-auto px-8 text-base h-12 bg-background/50 backdrop-blur-sm border-2 border-border hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-[background-color,border-color,color] duration-300"
             >
               {t("secondaryButton")}
             </Button>

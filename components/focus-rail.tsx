@@ -107,8 +107,9 @@ export function FocusRail({
 
   return (
     <div
+      suppressHydrationWarning
       className={cn(
-        "group relative flex h-[650px] md:h-[850px] w-full flex-col overflow-hidden bg-background text-foreground outline-none select-none overflow-x-hidden",
+        "group relative flex min-h-[650px] md:min-h-[850px] w-full flex-col overflow-hidden bg-background text-foreground outline-none select-none overflow-x-hidden pb-12",
         className
       )}
       onMouseEnter={() => setIsHovering(true)}
@@ -143,7 +144,7 @@ export function FocusRail({
       <div className="relative z-10 flex flex-1 flex-col justify-center px-4 md:px-8">
         {/* DRAGGABLE RAIL CONTAINER */}
         <motion.div
-          className="relative mx-auto flex h-[400px] md:h-[600px] w-full max-w-6xl items-center justify-center perspective-[1200px] cursor-grab active:cursor-grabbing"
+          className="relative mx-auto flex h-[400px] md:h-[600px] w-full max-w-6xl items-center justify-center perspective-distant cursor-grab active:cursor-grabbing"
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.2}
@@ -172,6 +173,7 @@ export function FocusRail({
             return (
               <motion.div
                 key={absIndex}
+                suppressHydrationWarning
                 className={cn(
                   "absolute aspect-3/4 w-[300px] md:w-[450px] rounded-2xl border border-border bg-card shadow-2xl transition-shadow duration-300 overflow-hidden",
                   isCenter ? "z-20 shadow-primary/5" : "z-10"
@@ -211,32 +213,32 @@ export function FocusRail({
 
         {/* Info & Controls */}
         <div className="mx-auto mt-12 flex w-full max-w-4xl flex-col items-center justify-between gap-6 md:flex-row pointer-events-auto">
-          <div className="flex flex-1 flex-col items-center text-center md:items-start md:text-left h-32 justify-center">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeItem.id}
-                initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
-                transition={{ duration: 0.3 }}
-                className="space-y-2"
-              >
-                {activeItem.meta && (
-                  <span className="text-xs font-medium uppercase tracking-wider text-emerald-600">
-                    {activeItem.meta}
-                  </span>
-                )}
-                <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-foreground">
-                  {activeItem.title}
-                </h2>
-                {activeItem.description && (
-                  <p className="max-w-md text-muted-foreground">
-                    {activeItem.description}
-                  </p>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
+            <div className="flex flex-col items-center text-center md:items-start md:text-left min-h-[8rem] justify-center flex-1">
+              <AnimatePresence initial={false}>
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20, position: "absolute" }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="w-full"
+                >
+                  {activeItem.meta && (
+                    <span className="text-xs font-medium uppercase tracking-wider text-emerald-600">
+                      {activeItem.meta}
+                    </span>
+                  )}
+                  <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-foreground">
+                    {activeItem.title}
+                  </h2>
+                  {activeItem.description && (
+                    <p className="max-w-md text-muted-foreground">
+                      {activeItem.description}
+                    </p>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1 rounded-full bg-muted/80 p-1 ring-1 ring-border backdrop-blur-md">

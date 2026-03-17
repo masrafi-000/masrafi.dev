@@ -1,15 +1,25 @@
 "use client";
 
-import React from "react";
+import { useEffect, useRef } from "react";
 import Container from "@/components/custom/container";
 import Section from "@/components/custom/section";
 import SectionHeading from "@/components/custom/sectionHeading";
 import { FocusRail, FocusRailItem } from "@/components/focus-rail";
 import projectsData from "@/data/projects.json";
 import { useTranslations } from "next-intl";
+import { AnimateHeight } from "./animate-height";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export const ProjectsSection = () => {
   const t = useTranslations("Projects");
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   
   const featuredProjects: FocusRailItem[] = projectsData
     .filter((p) => p.featured)
@@ -22,10 +32,56 @@ export const ProjectsSection = () => {
       meta: p.tech[0], // Use first tech as meta tag
     }));
 
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Heading animation
+      if (headingRef.current) {
+        gsap.fromTo(
+          headingRef.current,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: headingRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+
+      // Content (FocusRail) animation
+      if (contentRef.current) {
+        gsap.fromTo(
+          contentRef.current,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: contentRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <Section variant="full" className="py-24 md:py-32 bg-background overflow-hidden">
+    <Section ref={sectionRef} variant="full" className="py-24 md:py-32 bg-background overflow-hidden">
       <Container variant="default" className="relative z-10">
-        <div className="text-center mb-16">
+        <div ref={headingRef} className="text-center mb-16">
           <SectionHeading align="center">
             <h2 className="text-3xl md:text-5xl font-serif tracking-tight text-foreground mb-4">
               {t("sectionTitle") || "Featured Workspace"}
@@ -35,16 +91,18 @@ export const ProjectsSection = () => {
             </p>
           </SectionHeading>
         </div>
-
       </Container>
-        <div className="w-full">
+      
+      <div ref={contentRef}>
+        <AnimateHeight className="w-full">
           <FocusRail 
             items={featuredProjects} 
             autoPlay={true} 
             interval={5000} 
             className="w-full"
           />
-        </div>
+        </AnimateHeight>
+      </div>
     </Section>
   );
 };
