@@ -5,12 +5,7 @@ import Section from "@/components/custom/section";
 import SectionHeading from "@/components/custom/sectionHeading";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import gsap from "@/lib/gsap";
 
 export const CaseStudy = () => {
   const t = useTranslations("CaseStudy");
@@ -91,7 +86,7 @@ export const CaseStudy = () => {
             willChange: "transform, opacity",
             scrollTrigger: {
               trigger: step,
-              start: "top 85%", // Trigger when the top of the step is 85% down the viewport
+              start: "top 85%", 
               toggleActions: "play none none reverse",
             },
           }

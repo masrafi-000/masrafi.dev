@@ -1,19 +1,33 @@
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-const MOBILE_BREAKPOINT = 1024
+const MOBILE_BREAKPOINT = 1024;
 
-export function useIsMobile() {
+/**
+ * useIsMobile — Production Grade
+ *
+ * Uses the `matchMedia` API instead of a `resize` event listener.
+ * This fires ONLY when the breakpoint is crossed (not on every pixel),
+ * saving 60+ unnecessary state updates per second during resize.
+ */
+export function useIsMobile(): boolean {
   const [isMobile, setIsMobile] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+
+    const onChange = (e: MediaQueryListEvent) => {
+      setIsMobile(e.matches);
     };
 
-    checkMobile(); // Check on mount
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    // Set initial value
+    setIsMobile(mql.matches);
+
+    // Modern API: addEventListener (replaces deprecated addListener)
+    mql.addEventListener("change", onChange);
+
+    return () => mql.removeEventListener("change", onChange);
   }, []);
 
   return isMobile;

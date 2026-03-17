@@ -8,12 +8,7 @@ import { FocusRail, FocusRailItem } from "@/components/focus-rail";
 import projectsData from "@/data/projects.json";
 import { useTranslations } from "next-intl";
 import { AnimateHeight } from "./animate-height";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import gsap from "@/lib/gsap";
 
 export const ProjectsSection = () => {
   const t = useTranslations("Projects");
@@ -38,14 +33,13 @@ export const ProjectsSection = () => {
     const ctx = gsap.context(() => {
       // Heading animation
       if (headingRef.current) {
+        gsap.set(headingRef.current, { willChange: "transform, opacity" });
         gsap.fromTo(
           headingRef.current,
           { opacity: 0, y: 30 },
           {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out",
+            opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+            onComplete: () => { gsap.set(headingRef.current!, { willChange: "auto" }); },
             scrollTrigger: {
               trigger: headingRef.current,
               start: "top 85%",
@@ -57,14 +51,13 @@ export const ProjectsSection = () => {
 
       // Content (FocusRail) animation
       if (contentRef.current) {
+        gsap.set(contentRef.current, { willChange: "transform, opacity" });
         gsap.fromTo(
           contentRef.current,
           { opacity: 0, y: 40 },
           {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power2.out",
+            opacity: 1, y: 0, duration: 1, ease: "power2.out",
+            onComplete: () => { gsap.set(contentRef.current!, { willChange: "auto" }); },
             scrollTrigger: {
               trigger: contentRef.current,
               start: "top 80%",

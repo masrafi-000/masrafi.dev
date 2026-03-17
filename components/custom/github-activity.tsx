@@ -7,8 +7,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "@/lib/gsap";
+import { ScrollTrigger } from "@/lib/gsap";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -18,10 +18,6 @@ import { GitHubCalendar } from "react-github-calendar";
 import { Button } from "../ui/button";
 import Section from "./section";
 import { AnimateHeight } from "@/components/custom/animate-height";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 // Icons
 const StarIcon = ({ className }: { className?: string }) => (
@@ -57,23 +53,20 @@ export const GitHubActivity = () => {
 
     let ctx: gsap.Context;
 
-    // Small delay to ensure the browser has laid out the newly rendered elements
-    // so ScrollTrigger can accurately measure their positions.
+    // Small delay so browser finishes layout before ScrollTrigger measures
     const timer = setTimeout(() => {
+      // Refresh measured positions after new DOM is painted
       ScrollTrigger.refresh();
 
       ctx = gsap.context(() => {
-        // Add a clean stagger animation to all cards simultaneously
+        // Stagger entry animation
+        gsap.set(cardsRef.current, { willChange: "transform, opacity" });
         gsap.fromTo(
           cardsRef.current,
           { opacity: 0, y: 30 },
           {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "power3.out",
-            willChange: "transform, opacity",
+            opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out",
+            onComplete: () => { gsap.set(cardsRef.current, { willChange: "auto" }); },
             scrollTrigger: {
               trigger: sectionRef.current,
               start: "top 75%",

@@ -133,7 +133,7 @@ export function FocusRail({
               alt=""
               fill
               className="h-full w-full object-cover blur-3xl saturate-200"
-              unoptimized
+              sizes="100vw"
             />
             <div className="absolute inset-0 bg-linear-to-t from-background via-background/50 to-transparent" />
           </motion.div>
@@ -200,7 +200,8 @@ export function FocusRail({
                   alt={item.title}
                   fill
                   className="h-full w-full rounded-2xl object-cover pointer-events-none"
-                  unoptimized
+                  sizes="(max-width: 768px) 300px, 450px"
+                  priority={isCenter}
                 />
 
                 {/* Lighting layers */}

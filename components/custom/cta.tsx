@@ -7,13 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// Register ScrollTrigger plugin
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import gsap from "@/lib/gsap";
+// ScrollTrigger is registered via lib/gsap — no named import needed
 
 export const CTA = () => {
   const t = useTranslations("CTA");
@@ -26,19 +21,13 @@ export const CTA = () => {
 
     const ctx = gsap.context(() => {
       // 1. Text Entry Animation
+      gsap.set(textElementsRef.current, { willChange: "transform, opacity" });
       gsap.fromTo(
         textElementsRef.current,
-        { 
-          y: 40, 
-          opacity: 0 
-        },
-        { 
-          y: 0, 
-          opacity: 1, 
-          duration: 0.8, 
-          stagger: 0.15, 
-          ease: "power3.out",
-          willChange: "transform, opacity",
+        { y: 40, opacity: 0 },
+        {
+          y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out",
+          onComplete: () => { gsap.set(textElementsRef.current, { willChange: "auto" }); },
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top 80%",

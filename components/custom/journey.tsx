@@ -2,15 +2,10 @@
 
 import Container from "@/components/custom/container";
 import SectionHeading from "@/components/custom/sectionHeading";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "@/lib/gsap";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 import Section from "./section";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 export const Journey = () => {
   const t = useTranslations("Journey");
@@ -53,15 +48,13 @@ export const Journey = () => {
     const ctx = gsap.context(() => {
       // 1. Heading block animation
       if (headingRef.current) {
+        gsap.set(headingRef.current, { willChange: "transform, opacity" });
         gsap.fromTo(
           headingRef.current,
           { opacity: 0, y: 30 },
           {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            willChange: "transform, opacity",
+            opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+            onComplete: () => { gsap.set(headingRef.current!, { willChange: "auto" }); },
             scrollTrigger: {
               trigger: headingRef.current,
               start: "top 85%",

@@ -5,8 +5,7 @@ import Section from "@/components/custom/section";
 import SectionHeading from "@/components/custom/sectionHeading";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "@/lib/gsap";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
@@ -15,10 +14,6 @@ import { useTerminalStore } from "@/store/terminal-store";
 import { Terminal as TerminalIcon } from "lucide-react";
 import Terminal from "@/components/custom/terminal";
 import modernHero from "@/public/images/hero.png";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 export const Hero = () => {
   const t = useTranslations("Hero");
@@ -37,11 +32,15 @@ export const Hero = () => {
       // 1. Initial Entrance Timeline
       const tl = gsap.timeline();
 
-      // Stagger text elements
+      // Stagger text elements — hint GPU before animating
+      gsap.set(textElementsRef.current, { willChange: "transform, opacity" });
       tl.fromTo(
         textElementsRef.current,
         { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out" },
+        {
+          y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out",
+          onComplete: () => { gsap.set(textElementsRef.current, { willChange: "auto" }); },
+        },
       );
 
       // Fade in and float image

@@ -8,11 +8,12 @@ const nextConfig: NextConfig = {
   output: "standalone",
 
   images: {
-    domains: [
-      "avatars.githubusercontent.com",
-      "github-readme-stats.vercel.app",
-      "streak-stats.demolab.com",
-      "github-readme-activity-graph.vercel.app"
+    remotePatterns: [
+      { protocol: "https", hostname: "avatars.githubusercontent.com" },
+      { protocol: "https", hostname: "github-readme-stats.vercel.app" },
+      { protocol: "https", hostname: "streak-stats.demolab.com" },
+      { protocol: "https", hostname: "github-readme-activity-graph.vercel.app" },
+      { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
 };
