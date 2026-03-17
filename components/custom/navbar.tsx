@@ -2,7 +2,7 @@
 
 import { ToggleTheme } from "@/components/lightswind/toggle-theme";
 import { Link } from "@/i18n/navigation";
-import gsap from "gsap";
+import gsap from "@/lib/gsap";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { LanguageSwitcher } from "./language-switcher";
@@ -13,9 +13,11 @@ import { Terminal as TerminalIcon } from "lucide-react";
 function HamburgerButton({
   isOpen,
   onClick,
+  ariaLabel,
 }: {
   isOpen: boolean;
   onClick: () => void;
+  ariaLabel: string;
 }) {
   const topBarRef = useRef<SVGLineElement>(null);
   const botBarRef = useRef<SVGLineElement>(null);
@@ -53,7 +55,7 @@ function HamburgerButton({
     <button
       onClick={onClick}
       className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
-      aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+      aria-label={ariaLabel}
     >
       <svg
         width="28"
@@ -218,6 +220,7 @@ export const Navbar = () => {
           <HamburgerButton
             isOpen={isMobileMenuOpen}
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+            ariaLabel={isMobileMenuOpen ? t("closeMenu") : t("openMenu")}
           />
         </div>
 
@@ -248,7 +251,7 @@ export const Navbar = () => {
             </div>
             <div className="flex items-center gap-3">
               <span className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                Theme
+                {t("theme")}
               </span>
               <ToggleTheme animationType="circle-spread" className="scale-90" />
             </div>

@@ -124,7 +124,7 @@ export const GitHubActivity = () => {
 
         {error && (
           <div className="text-center text-destructive p-4 bg-destructive/10 rounded-sm">
-            Failed to load GitHub activity. Please try again later.
+            {t("errorMessage")}
           </div>
         )}
 
@@ -310,7 +310,7 @@ export const GitHubActivity = () => {
                         
                         <CardContent className="px-6 py-2 grow flex flex-col relative z-10">
                           <CardDescription className="line-clamp-2 text-sm">
-                            {repo.description || "No description provided."}
+                            {repo.description || t("noDescription")}
                           </CardDescription>
                         </CardContent>
 

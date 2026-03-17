@@ -5,7 +5,10 @@
     "projects": "Projects",
     "contact": "Contact",
     "blog": "Blog",
-    "language": "Language"
+    "language": "Language",
+    "theme": "Theme",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu"
   },
   "Footer": {
     "copyright": "© {year} All rights reserved.",
@@ -25,6 +28,7 @@
     "secondaryButton": "My Projects"
   },
   "CTA": {
+    "availableBadge": "Available for Work",
     "title": "Let's Build Something Amazing Together",
     "description": "Looking for a specialized developer to bring your ideas to life? I'm available for freelance work and full-time opportunities.",
     "primaryButton": "Start a Project",
@@ -63,7 +67,9 @@
     "recentRepos": "Recent Repositories",
     "contributions": "Contribution Graph",
     "viewProfile": "View GitHub Profile",
-    "updatedAuth": "Updated at"
+    "updatedAuth": "Updated at",
+    "errorMessage": "Failed to load GitHub activity. Please try again later.",
+    "noDescription": "No description provided."
   },
   "Projects": {
     "sectionTitle": "Featured Workspace",

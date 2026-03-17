@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
+import { cookies } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -33,8 +34,12 @@ export default async function RootLayout({
   setRequestLocale(locale);
   const messages = await getMessages();
 
+  const cookieStore = await cookies();
+  const themeCookie = cookieStore.get("theme")?.value;
+  const htmlClass = themeCookie === "dark" ? "dark" : "";
+
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning className={htmlClass}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
@@ -43,7 +48,7 @@ export default async function RootLayout({
           defaultTheme="system"
           enableSystem
           storageKey="theme"
-          disableTransitionOnChange={false}
+          disableTransitionOnChange
         >
           <NextIntlClientProvider messages={messages} locale={locale}>
             <QueryProvider>
