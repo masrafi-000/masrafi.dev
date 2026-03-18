@@ -3,17 +3,17 @@
 import Container from "@/components/custom/container";
 import Section from "@/components/custom/section";
 import SectionHeading from "@/components/custom/sectionHeading";
+import Terminal from "@/components/custom/terminal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import gsap from "@/lib/gsap";
+import modernHero from "@/public/images/hero.png";
+import { useTerminalStore } from "@/store/terminal-store";
+import { AnimatePresence, motion } from "framer-motion";
+import { Terminal as TerminalIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { useTerminalStore } from "@/store/terminal-store";
-import { Terminal as TerminalIcon } from "lucide-react";
-import Terminal from "@/components/custom/terminal";
-import modernHero from "@/public/images/hero.png";
 
 export const Hero = () => {
   const t = useTranslations("Hero");
@@ -185,14 +185,14 @@ export const Hero = () => {
             >
               <Button
                 size="lg"
-                className="w-full sm:w-auto px-8 text-base h-12 shadow-[0_0_20px_rgba(var(--primary),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] hover:-translate-y-1 transition-[background-color,transform,box-shadow] duration-300"
+                className="w-full sm:w-auto px-8 text-base h-12 shadow-[0_0_20px_rgba(var(--primary),0.3)] font-medium transform hover:scale-105 hover:text-white transition-all ease-in-out duration-300 delay-75 cursor-pointer"
               >
                 {t("primaryButton")}
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full sm:w-auto px-8 text-base h-12 bg-background/50 backdrop-blur-sm border-2 border-border hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-[background-color,border-color,color] duration-300"
+                className="w-full sm:w-auto px-8 text-base h-12 bg-background/50 backdrop-blur-sm  font-medium border-2 border-border hover:border-primary/50 hover:bg-primary/5 hover:text-primary hover:scale-105 transition-all ease-in-out delay-75 duration-300 cursor-pointer"
                 onClick={openTerminal}
               >
                 {t("secondaryButton")}

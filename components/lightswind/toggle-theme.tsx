@@ -1,10 +1,10 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCallback, useRef, useState } from "react";
 import { flushSync } from "react-dom";
-import { cn } from "@/lib/utils";
 
 type AnimationType =
   | "none"
@@ -26,7 +26,6 @@ interface ToggleThemeProps extends React.ComponentPropsWithoutRef<"button"> {
   animationType?: AnimationType;
 }
 
-
 export const ToggleTheme = ({
   className,
   duration = 400,
@@ -41,7 +40,6 @@ export const ToggleTheme = ({
     if (node) setMounted(true);
   }, []);
 
-
   const isDark = mounted && resolvedTheme === "dark";
 
   const toggleTheme = useCallback(async () => {
@@ -49,7 +47,6 @@ export const ToggleTheme = ({
 
     const newTheme = isDark ? "light" : "dark";
 
- 
     document.cookie = `theme=${newTheme}; path=/; max-age=31536000; SameSite=Lax`;
 
     if (!document.startViewTransition) {
@@ -238,7 +235,10 @@ export const ToggleTheme = ({
       case "wave-ripple":
         document.documentElement.animate(
           {
-            clipPath: [`circle(0% at 50% 50%)`, `circle(${maxRadius}px at 50% 50%)`],
+            clipPath: [
+              `circle(0% at 50% 50%)`,
+              `circle(${maxRadius}px at 50% 50%)`,
+            ],
           },
           {
             duration: duration * 1.5,
@@ -257,7 +257,10 @@ export const ToggleTheme = ({
   return (
     <>
       <button
-        ref={(node) => { buttonRef.current = node; setMountedRef(node); }}
+        ref={(node) => {
+          buttonRef.current = node;
+          setMountedRef(node);
+        }}
         onClick={toggleTheme}
         className={cn(
           "relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
@@ -269,7 +272,9 @@ export const ToggleTheme = ({
         aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
         {...props}
       >
-        <span className="sr-only">{isDark ? "Switch to light mode" : "Switch to dark mode"}</span>
+        <span className="sr-only">
+          {isDark ? "Switch to light mode" : "Switch to dark mode"}
+        </span>
         <span
           className={cn(
             "pointer-events-none flex h-5 w-5 items-center justify-center rounded-full bg-background shadow ring-0 transition duration-200 ease-in-out z-10",
