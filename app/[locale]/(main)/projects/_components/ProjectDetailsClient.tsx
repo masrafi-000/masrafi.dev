@@ -58,7 +58,7 @@ export default function ProjectDetailsClient({ project }: { project: ProjectType
           />
         </motion.div>
         
-        <div className="relative z-20 w-full pb-16 pt-32 bg-linear-to-t from-background via-background/80 to-transparent">
+        <div className="relative z-20 w-full pb-12 pt-24 md:pb-16 md:pt-32 bg-linear-to-t from-background via-background/80 to-transparent">
           <Container variant="default">
             <Link 
               href="/projects" 
@@ -82,7 +82,7 @@ export default function ProjectDetailsClient({ project }: { project: ProjectType
                 </Badge>
               </div>
               
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif tracking-tighter text-foreground mb-6 leading-[1.1]">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif tracking-tighter text-foreground mb-4 md:mb-6 leading-[1.1]">
                 {project.title}
               </h1>
             </motion.div>
@@ -91,7 +91,7 @@ export default function ProjectDetailsClient({ project }: { project: ProjectType
       </div>
 
       <Container variant="default" className="py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           
           {/* Main Content (Left) */}
           <div className="lg:col-span-8 order-2 lg:order-1">
@@ -149,7 +149,7 @@ export default function ProjectDetailsClient({ project }: { project: ProjectType
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="sticky top-32 p-8 rounded-3xl bg-muted/20 border border-white/5 backdrop-blur-xl shadow-2xl space-y-8"
+              className="lg:sticky lg:top-32 p-6 md:p-8 flex flex-col gap-6 md:gap-8 rounded-3xl bg-muted/20 border border-white/5 backdrop-blur-xl shadow-2xl"
             >
               {/* Project Details List */}
               <div className="space-y-4">

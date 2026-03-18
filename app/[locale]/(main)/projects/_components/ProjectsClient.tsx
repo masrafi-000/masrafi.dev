@@ -20,6 +20,7 @@ import {
   SelectValue 
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import WheelPagination from "@/components/wheel-pagination";
 
 interface ProjectType {
   id: string;
@@ -41,12 +42,14 @@ interface ProjectType {
 
 export default function ProjectsClient({ projectsData }: { projectsData: ProjectType[] }) {
   const t = useTranslations("Projects");
+  const ITEMS_PER_PAGE = 6;
   
   // States
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeTech, setActiveTech] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
+  const [currentPage, setCurrentPage] = useState(0);
 
   // Derived Values
   const categories = useMemo(() => {
@@ -78,6 +81,18 @@ export default function ProjectsClient({ projectsData }: { projectsData: Project
       });
   }, [searchQuery, activeCategory, activeTech, sortBy, projectsData]);
 
+  // Reset pagination when filters change
+  React.useEffect(() => {
+    setCurrentPage(0);
+  }, [searchQuery, activeCategory, activeTech, sortBy]);
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
+  const paginatedProjects = useMemo(() => {
+    const start = currentPage * ITEMS_PER_PAGE;
+    return filteredProjects.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredProjects, currentPage]);
+
   const clearFilters = () => {
     setSearchQuery("");
     setActiveCategory("All");
@@ -86,11 +101,11 @@ export default function ProjectsClient({ projectsData }: { projectsData: Project
   };
 
   return (
-    <main className="pt-24 min-h-screen bg-background">
-      <Section variant="full" className="py-20">
+
+      <Section variant="default" className="px-6 pt-32">
         <Container variant="default">
           <SectionHeading align="left" className="mb-12">
-            <h1 className="text-5xl md:text-7xl font-serif tracking-tighter text-foreground mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif tracking-tighter text-foreground mb-4 md:mb-6">
               {t("all")} <span className="italic font-light text-primary">{t("projects")}</span>
             </h1>
             <p className="text-xl text-muted-foreground font-light max-w-2xl">
@@ -120,10 +135,10 @@ export default function ProjectsClient({ projectsData }: { projectsData: Project
                 )}
               </div>
 
-              <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
                 {/* Tech Filter */}
                 <Select value={activeTech} onValueChange={setActiveTech}>
-                  <SelectTrigger className="h-11 min-w-[160px] bg-muted/30 border-border/50">
+                  <SelectTrigger className="h-11 w-full sm:min-w-[160px] bg-muted/30 border-border/50">
                     <div className="flex items-center gap-2">
                       <Filter className="h-3.5 w-3.5 opacity-50" />
                       <SelectValue placeholder={t("filterByTech")} />
@@ -138,7 +153,7 @@ export default function ProjectsClient({ projectsData }: { projectsData: Project
 
                 {/* Sort Order */}
                 <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="h-11 min-w-[160px] bg-muted/30 border-border/50">
+                  <SelectTrigger className="h-11 w-full sm:min-w-[160px] bg-muted/30 border-border/50">
                     <SelectValue placeholder={t("sortBy")} />
                   </SelectTrigger>
                   <SelectContent>
@@ -150,7 +165,7 @@ export default function ProjectsClient({ projectsData }: { projectsData: Project
                 </Select>
 
                 {(searchQuery || activeCategory !== "All" || activeTech !== "All") && (
-                  <Button variant="ghost" onClick={clearFilters} className="h-11 gap-2 text-muted-foreground hover:text-primary">
+                  <Button variant="ghost" onClick={clearFilters} className="h-11 gap-2 text-muted-foreground hover:text-primary w-full sm:w-auto">
                     <X className="h-4 w-4" /> {t("clearFilters")}
                   </Button>
                 )}
@@ -176,21 +191,22 @@ export default function ProjectsClient({ projectsData }: { projectsData: Project
             </div>
           </div>
 
-          {/* Grid */}
-          <motion.div 
-            layout
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project) => (
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={`${currentPage}-${searchQuery}-${activeCategory}-${activeTech}-${sortBy}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, staggerChildren: 0.1 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {paginatedProjects.map((project, index) => (
                 <motion.div
                   key={project.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4 }}
-                  className="group relative flex flex-col bg-card border border-border/50 overflow-hidden hover:border-primary/30 transition-all duration-500 rounded-xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group relative flex flex-col bg-card border border-border/50 overflow-hidden hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 rounded-2xl"
                 >
                   <Link href={`/projects/${project.slug}`} className="absolute inset-0 z-10" />
                   
@@ -240,8 +256,8 @@ export default function ProjectsClient({ projectsData }: { projectsData: Project
                   </div>
                 </motion.div>
               ))}
-            </AnimatePresence>
-          </motion.div>
+            </motion.div>
+          </AnimatePresence>
 
           {filteredProjects.length === 0 && (
             <motion.div 
@@ -258,8 +274,27 @@ export default function ProjectsClient({ projectsData }: { projectsData: Project
               </Button>
             </motion.div>
           )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-16 flex justify-center"
+            >
+              <WheelPagination 
+                totalPages={totalPages}
+                visibleCount={5}
+                onChange={(page) => {
+                  setCurrentPage(page);
+                  // Optional: scroll back to top of grid
+                  window.scrollTo({ top: 300, behavior: "smooth" });
+                }}
+              />
+            </motion.div>
+          )}
         </Container>
       </Section>
-    </main>
+  
   );
 }
