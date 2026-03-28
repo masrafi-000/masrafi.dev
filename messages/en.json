@@ -128,5 +128,27 @@
     "backendSkills": "Node.js, Express, PostgreSQL, MongoDB, Prisma, Firebase",
     "tools": "Tools & Design",
     "toolsSkills": "Git, Docker, Figma, Framer Motion, GSAP, Postman"
+  },
+  "Contact": {
+    "pageTitle": "Contact Me",
+    "pageDescription": "Let's build something exceptional together.",
+    "getInTouch": "Get in Touch",
+    "getInTouchDesc": "Have a project in mind, a question, or just want to say hi? I'd love to hear from you. Fill out the form, and I'll get back to you as soon as possible.",
+    "nameLabel": "Your Name",
+    "namePlaceholder": "John Doe",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "john@example.com",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "How can I help you?",
+    "messageLabel": "Your Message",
+    "messagePlaceholder": "Tell me about your project...",
+    "sendButton": "Send Message",
+    "sendingText": "Sending...",
+    "successMessage": "Message sent successfully! I'll be in touch soon.",
+    "errorMessage": "Something went wrong. Please try again later.",
+    "contactInfo": "Contact Information",
+    "locationText": "Dhaka, Bangladesh",
+    "emailText": "hello@masrafi.dev",
+    "socialLinks": "Connect with me"
   }
 }
