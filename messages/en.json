@@ -118,5 +118,15 @@
     "philosophy2Desc": "Optimizing for speed, accessibility, and SEO.",
     "philosophy3Title": "Continuous Learning",
     "philosophy3Desc": "Staying ahead of the curve in a fast-paced industry."
+  },
+  "Skills": {
+    "sectionTitle": "Technical Arsenal",
+    "sectionSubtitle": "The tools and technologies I use to build high-performance digital experiences.",
+    "frontend": "Frontend Development",
+    "frontendSkills": "React, Next.js, TypeScript, Tailwind CSS, Redux, Zustand",
+    "backend": "Backend & Database",
+    "backendSkills": "Node.js, Express, PostgreSQL, MongoDB, Prisma, Firebase",
+    "tools": "Tools & Design",
+    "toolsSkills": "Git, Docker, Figma, Framer Motion, GSAP, Postman"
   }
 }

@@ -4,12 +4,14 @@ import { GitHubActivity } from "@/components/custom/github-activity";
 import { Hero } from "@/components/custom/hero";
 import { Journey } from "@/components/custom/journey";
 import { ProjectsSection } from "@/components/custom/projects-section";
+import { SkillsSection } from "@/components/custom/skills-section";
 
 export default function Home() {
   return (
     <main>
       <Hero />
       <Journey />
+      <SkillsSection />
       <GitHubActivity />
       <ProjectsSection />
       <CaseStudy />

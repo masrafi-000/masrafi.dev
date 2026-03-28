@@ -114,7 +114,7 @@ export const GitHubActivity = () => {
 
       <Container variant="default"  className="relative z-10 px-4">
         <SectionHeading align="center" className="mb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif tracking-tight text-foreground mb-4">
+          <h2 className="text-4xl md:text-5xl font-serif tracking-tight text-foreground mb-4">
             {t("sectionTitle")}
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
