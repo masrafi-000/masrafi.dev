@@ -96,5 +96,27 @@
     "searchPlaceholder": "Search projects...",
     "noResults": "No projects found matching your criteria.",
     "clearFilters": "Clear Filters"
+  },
+  "About": {
+    "title": "About",
+    "me": "Me",
+    "subtitle": "A glimpse into my universe of code and creativity.",
+    "biographyTitle": "Biography",
+    "biographyText1": "I am a passionate Frontend Developer based in Bangladesh, dedicated to crafting beautiful, high-performance web applications. My journey began with a curiosity for how things work on the internet, which quickly evolved into a deep love for coding.",
+    "biographyText2": "I specialize in the modern React ecosystem, with a keen eye for design and a strong focus on user experience. When I'm not coding, I enjoy exploring new technologies, contributing to open-source projects, and sharing my knowledge with the developer community.",
+    "techStackTitle": "Tech Stack Playground",
+    "frontend": "Frontend",
+    "backend": "Backend & Tools",
+    "design": "Design & Animations",
+    "frontendSkills": "React, Next.js, TypeScript, Tailwind CSS",
+    "backendSkills": "Node.js, Firebase, Git, Prisma",
+    "designSkills": "Figma, Framer Motion, GSAP",
+    "philosophyTitle": "Core Philosophy",
+    "philosophy1Title": "Pixel Perfect",
+    "philosophy1Desc": "Obsessive attention to detail in every component.",
+    "philosophy2Title": "Performance First",
+    "philosophy2Desc": "Optimizing for speed, accessibility, and SEO.",
+    "philosophy3Title": "Continuous Learning",
+    "philosophy3Desc": "Staying ahead of the curve in a fast-paced industry."
   }
 }
