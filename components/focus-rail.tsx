@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion, AnimatePresence, PanInfo, type Transition } from "framer-motion";
-import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowUpRight, Github, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -14,6 +14,8 @@ export type FocusRailItem = {
   description?: string;
   imageSrc: string;
   href?: string;
+  githubUrl?: string;
+  liveUrl?: string;
   meta?: string;
 };
 
@@ -213,9 +215,9 @@ export function FocusRail({
         </motion.div>
 
         {/* Info & Controls */}
-        <div className="mx-auto mt-12 flex w-full max-w-4xl flex-col items-center justify-between gap-6 md:flex-row pointer-events-auto">
-            <div className="flex flex-col items-center text-center md:items-start md:text-left min-h-[8rem] justify-center flex-1">
-              <AnimatePresence initial={false}>
+        <div className="mx-auto mt-12 flex w-full max-w-4xl flex-col items-center justify-between gap-8 lg:flex-row pointer-events-auto">
+            <div className="flex flex-col items-center text-center lg:items-start lg:text-left min-h-[8rem] justify-center flex-1 w-full">
+              <AnimatePresence mode="popLayout" initial={false}>
                 <motion.div
                   key={activeIndex}
                   initial={{ opacity: 0, y: 20 }}
@@ -229,11 +231,11 @@ export function FocusRail({
                       {activeItem.meta}
                     </span>
                   )}
-                  <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-foreground">
+                  <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-foreground mt-1">
                     {activeItem.title}
                   </h2>
                   {activeItem.description && (
-                    <p className="max-w-md text-muted-foreground">
+                    <p className="max-w-md mx-auto lg:mx-0 text-muted-foreground mt-2">
                       {activeItem.description}
                     </p>
                   )}
@@ -241,8 +243,8 @@ export function FocusRail({
               </AnimatePresence>
             </div>
 
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1 rounded-full bg-muted/80 p-1 ring-1 ring-border backdrop-blur-md">
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full lg:w-auto">
+            <div className="flex items-center gap-1 rounded-full bg-muted/80 p-1 ring-1 ring-border backdrop-blur-md mx-auto sm:mx-0">
               <button
                 onClick={handlePrev}
                 className="rounded-full p-3 text-muted-foreground transition hover:bg-accent hover:text-accent-foreground active:scale-95"
@@ -262,15 +264,41 @@ export function FocusRail({
               </button>
             </div>
 
-            {activeItem.href && (
-              <Link
-                href={activeItem.href}
-                className="group flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90 hover:scale-105 active:scale-95"
-              >
-                Explore
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </Link>
-            )}
+            <div className="flex flex-wrap justify-center items-center gap-3">
+              {activeItem.href && (
+                <Link
+                  href={activeItem.href}
+                  className="group flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-all hover:opacity-90 hover:scale-105 active:scale-95 flex-1 sm:flex-none justify-center"
+                >
+                  Project Details
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </Link>
+              )}
+              {activeItem.liveUrl && (
+                <Link
+                  href={activeItem.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-center gap-2 rounded-full border border-border bg-background/50 backdrop-blur-sm p-3 text-sm font-medium text-foreground transition-all hover:bg-muted hover:scale-105 active:scale-95 shadow-sm"
+                  title="Live Project"
+                >
+                  <ExternalLink className="h-5 w-5" />
+                  <span className="sr-only">Live Project</span>
+                </Link>
+              )}
+              {activeItem.githubUrl && (
+                <Link
+                  href={activeItem.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-center gap-2 rounded-full border border-border bg-background/50 backdrop-blur-sm p-3 text-sm font-medium text-foreground transition-all hover:bg-muted hover:scale-105 active:scale-95 shadow-sm"
+                  title="GitHub Repository"
+                >
+                  <Github className="h-5 w-5" />
+                  <span className="sr-only">GitHub</span>
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>

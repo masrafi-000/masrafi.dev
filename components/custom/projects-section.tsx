@@ -24,6 +24,8 @@ export const ProjectsSection = () => {
       description: p.description,
       imageSrc: p.imageSrc,
       href: `/projects/${p.slug}`,
+      githubUrl: p.links?.github,
+      liveUrl: p.links?.live,
       meta: p.tech[0], // Use first tech as meta tag
     }));
 
