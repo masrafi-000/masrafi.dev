@@ -2,11 +2,12 @@
 
 import * as React from "react";
 import { motion, AnimatePresence, PanInfo, type Transition } from "framer-motion";
-import { ChevronLeft, ChevronRight, ArrowUpRight, Github, ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowUpRight,  ExternalLink } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Github } from "./ui/social-icons";
 
 export type FocusRailItem = {
   id: string | number;
