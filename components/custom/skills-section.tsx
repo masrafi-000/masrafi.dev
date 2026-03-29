@@ -68,7 +68,7 @@ export const SkillsSection = () => {
     <Section ref={sectionRef} variant="full" className="py-24 md:py-32 bg-background overflow-hidden relative">
       {/* Decorative Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-primary/5 blur-[120px] rounded-full animate-pulse opacity-50" />
+        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-primary/5 blur-[120px]  animate-pulse opacity-50" />
       </div>
 
       <Container variant="default" className="relative z-10 space-y-16 px-4 md:px-8">
@@ -84,7 +84,7 @@ export const SkillsSection = () => {
         </div>
 
         {/* The Expanding Panels Layout */}
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 h-[800px] lg:h-[550px] w-full max-w-6xl mx-auto">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 h-[800px] lg:h-[550px] w-full  mx-auto">
           {skillCategories.map((category, idx) => {
             const isActive = activeIndex === idx;
             const Icon = category.icon;
@@ -95,7 +95,7 @@ export const SkillsSection = () => {
                 layout
                 onClick={() => setActiveIndex(idx)}
                 className={cn(
-                  "relative rounded-3xl overflow-hidden cursor-pointer flex flex-col justify-end border transition-colors duration-500",
+                  "relative  overflow-hidden cursor-pointer flex flex-col justify-end border transition-colors duration-500",
                   isActive 
                     ? "lg:flex-[2.5] flex-[2.5] border-primary/30 shadow-2xl shadow-primary/5 bg-background/60" 
                     : "lg:flex-1 flex-1 border-border/40 hover:border-primary/20 bg-muted/10",
@@ -133,7 +133,7 @@ export const SkillsSection = () => {
                         className="flex-1 flex flex-col p-6 lg:p-10"
                       >
                         <div className="flex items-center gap-5 mb-8">
-                          <div className={cn("p-4 rounded-2xl bg-background shadow-xs border border-border/50", category.accent)}>
+                          <div className={cn("p-4 bg-background shadow-xs border border-border/50", category.accent)}>
                             <Icon className="w-8 h-8 lg:w-10 lg:h-10" />
                           </div>
                           <div>
@@ -151,7 +151,7 @@ export const SkillsSection = () => {
                                  initial={{ opacity: 0, scale: 0.8, y: 10 }}
                                  animate={{ opacity: 1, scale: 1, y: 0 }}
                                  transition={{ duration: 0.3, delay: 0.2 + i * 0.04, ease: "backOut" }}
-                                 className="px-4 py-2 lg:px-6 lg:py-3 bg-background border border-border/60 hover:border-primary/40 rounded-full text-xs lg:text-sm font-medium text-foreground transition-all cursor-default shadow-xs hover:shadow-md"
+                                 className="px-4 py-2 lg:px-6 lg:py-3 bg-background border border-border/60 hover:border-primary/40  text-xs lg:text-sm font-medium text-foreground transition-all cursor-default shadow-xs hover:shadow-md"
                                >
                                  {skill}
                                </motion.span>

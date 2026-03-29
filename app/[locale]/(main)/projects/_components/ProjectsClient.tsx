@@ -67,10 +67,10 @@ function ProjectCard({
       transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className="group relative flex flex-col bg-card border border-border/60 overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/40 transition-all duration-500"
+      className="group relative flex flex-col bg-card border border-border/60 overflow-hidden  shadow-lg hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/40 transition-all duration-500"
     >
       {/* ── Image Zone ───────────────────────────────────── */}
-      <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+      <div className="relative aspect-16/10 overflow-hidden bg-muted">
         <motion.div
           animate={{ scale: hovered ? 1.06 : 1 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -86,7 +86,7 @@ function ProjectCard({
         </motion.div>
 
         {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-linear-to-t from-card via-card/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         {/* Year badge */}
         <div className="absolute top-4 right-4 z-10">
@@ -98,7 +98,7 @@ function ProjectCard({
         {/* Featured indicator */}
         {project.featured && (
           <div className="absolute top-4 left-4 z-10">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/90 backdrop-blur-md text-primary-foreground text-[10px] font-semibold uppercase tracking-widest">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1  bg-primary/90 backdrop-blur-md text-primary-foreground text-[10px] font-semibold uppercase tracking-widest">
               <span className="w-1.5 h-1.5 rounded-full bg-primary-foreground animate-pulse" />
               Featured
             </span>
@@ -110,7 +110,7 @@ function ProjectCard({
           initial={{ y: "100%", opacity: 0 }}
           animate={hovered ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }}
           transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-x-0 bottom-0 z-20 flex items-center justify-center gap-3 p-4 bg-gradient-to-t from-card/95 to-card/40 backdrop-blur-sm"
+          className="absolute inset-x-0 bottom-0 z-20 flex items-center justify-center gap-3 p-4 bg-linear-to-t from-card/95 to-card/40 backdrop-blur-sm"
         >
           {/* Source Code button */}
           {project.links.github && (
@@ -119,7 +119,7 @@ function ProjectCard({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-border bg-background/80 backdrop-blur-sm text-sm font-medium text-foreground hover:bg-muted hover:border-primary/50 hover:text-primary transition-all duration-200 active:scale-95 shadow-sm"
+              className="flex items-center gap-2 px-4 py-2.5  border border-border bg-background/80 backdrop-blur-sm text-sm font-medium text-foreground hover:bg-muted hover:border-primary/50 hover:text-primary transition-all duration-200 active:scale-95 shadow-sm"
             >
               <Github className="w-4 h-4" />
               Source Code
@@ -133,7 +133,7 @@ function ProjectCard({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-all duration-200 active:scale-95 shadow-md shadow-primary/25"
+              className="flex items-center gap-2 px-4 py-2.5  bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-all duration-200 active:scale-95 shadow-md shadow-primary/25"
             >
               <ExternalLink className="w-4 h-4" />
               Live Demo
@@ -158,13 +158,13 @@ function ProjectCard({
             {project.tech.slice(0, 2).map((tech) => (
               <span
                 key={tech}
-                className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-mono"
+                className="text-[10px] px-2 py-0.5  bg-muted text-muted-foreground font-mono"
               >
                 {tech}
               </span>
             ))}
             {project.tech.length > 2 && (
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-mono">
+              <span className="text-[10px] px-2 py-0.5  bg-muted text-muted-foreground font-mono">
                 +{project.tech.length - 2}
               </span>
             )}
@@ -196,34 +196,37 @@ function ProjectCard({
           {/* Inline small action buttons (always visible) */}
           {/* <div className="flex items-center gap-2">
             {project.links.github && (
-              <a
+              <Link
                 href={project.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Source Code"
+                onClick={(e) => e.stopPropagation()}
                 className="p-2 rounded-full border border-border/60 text-muted-foreground hover:text-foreground hover:border-border hover:bg-muted transition-all duration-200 active:scale-95"
               >
                 <Github className="w-3.5 h-3.5" />
-              </a>
+              </Link>
             )}
             {project.links.live && (
-              <a
+              <Link
                 href={project.links.live}
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Live Demo"
-                className="p-2 rounded-full bg-primary/10 border border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200 active:scale-95"
+                onClick={(e) => e.stopPropagation()}
+                className="p-2  bg-primary/10 border border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-200 active:scale-95"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
-              </a>
+              </Link>
             )}
           </div> */}
-          <div className="flex item-center gap-2 justify-between">
-            <div className="p-1.5 bg-purple-500 "></div>
-            <div className="p-1.5 bg-green-500 "></div>
-            <div className="p-1.5 bg-blue-500 "></div>
-            <div className="p-1.5 bg-red-500 "></div>
-            
+
+          <div className="flex gap-2 justify-between items-center">
+            <div className="p-1.5 bg-green-600"></div>
+            <div className="p-1.5 bg-red-600"></div>
+            <div className="p-1.5 bg-blue-600"></div>
+            <div className="p-1.5 bg-yellow-600"></div>
+            <div className="p-1.5 bg-purple-600"></div>
           </div>
         </div>
       </div>
@@ -232,7 +235,7 @@ function ProjectCard({
       <motion.div
         animate={hovered ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.3 }}
-        className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-primary/30"
+        className="pointer-events-none absolute inset-0  ring-1 ring-primary/30"
       />
     </motion.div>
   );
@@ -345,13 +348,13 @@ export default function ProjectsClient({
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
               {/* Tech Filter */}
               <Select value={activeTech} onValueChange={setActiveTech}>
-                <SelectTrigger className="h-11 w-full sm:min-w-[160px] bg-muted/30 border-border/50">
+                <SelectTrigger className="h-11 w-full sm:min-w-[160px] bg-muted/30 border-border/50 ">
                   <div className="flex items-center gap-2">
                     <Filter className="h-3.5 w-3.5 opacity-50" />
                     <SelectValue placeholder={t("filterByTech")} />
                   </div>
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent >
                   {technologies.map((tech) => (
                     <SelectItem key={tech} value={tech}>
                       {tech}
