@@ -1,31 +1,24 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
-import { useTranslations } from "next-intl";
-import { Send, Mail, Phone, Check, Copy, LucideIcon } from "lucide-react";
-import { GithubIcon, TwitterIcon, LinkedinIcon, InstagramIcon } from "@/components/ui/social-icons";
-import { useForm } from "react-hook-form";
+import { GithubIcon, InstagramIcon, LinkedinIcon, TwitterIcon } from "@/components/ui/social-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { Check, Copy, LucideIcon, Mail, Phone, Send } from "lucide-react";
+import { useTranslations } from "next-intl";
+import React, { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-import gsap from "@/lib/gsap";
 import Container from "@/components/custom/container";
 import Section from "@/components/custom/section";
 import SectionHeading from "@/components/custom/sectionHeading";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import gsap from "@/lib/gsap";
+import { cn } from "@/lib/utils";
+import { ContactFormData, contactSchema } from "@/validators/zod/contact";
 
-const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters."),
-  email: z.string().email("Please enter a valid email address."),
-  subject: z.string().min(5, "Subject must be at least 5 characters."),
-  message: z.string().min(10, "Message must be at least 10 characters.").optional(),
-});
 
-type ContactFormData = z.infer<typeof contactSchema>;
 
 export default function ContactClient() {
   const t = useTranslations("Contact");
