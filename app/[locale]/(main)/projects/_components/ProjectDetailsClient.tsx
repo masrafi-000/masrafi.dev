@@ -5,10 +5,11 @@ import Container from "@/components/custom/container";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github, ChevronLeft, CalendarIcon, LayoutIcon, CodeIcon } from "lucide-react";
+import { ExternalLink, ChevronLeft, CalendarIcon, LayoutIcon, CodeIcon } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Github } from "@/components/ui/social-icons";
 
 interface ProjectType {
   id: string;
@@ -62,7 +63,7 @@ export default function ProjectDetailsClient({ project }: { project: ProjectType
           <Container variant="default">
             <Link 
               href="/projects" 
-              className="inline-flex items-center gap-2 text-sm text-foreground/70 hover:text-primary transition-colors mb-8 group backdrop-blur-md bg-background/20 px-4 py-2 rounded-full border border-white/10 w-fit"
+              className="inline-flex items-center gap-2 text-sm text-foreground/70 hover:text-primary transition-colors mb-8 group backdrop-blur-md bg-background/20 px-4 py-2  border border-white/10 w-fit"
             >
               <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
               {t("backToProjects")}
@@ -125,7 +126,7 @@ export default function ProjectDetailsClient({ project }: { project: ProjectType
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.1, duration: 0.5 }}
-                        className={`relative rounded-2xl overflow-hidden border border-white/5 shadow-2xl group ${i === 0 && project.gallery.length % 2 !== 0 ? 'md:col-span-2 aspect-21/9' : 'aspect-video'}`}
+                        className={`relative  overflow-hidden border border-white/5 shadow-2xl group ${i === 0 && project.gallery.length % 2 !== 0 ? 'md:col-span-2 aspect-21/9' : 'aspect-video'}`}
                       >
                         <Image
                           src={img}
@@ -149,12 +150,12 @@ export default function ProjectDetailsClient({ project }: { project: ProjectType
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="lg:sticky lg:top-32 p-6 md:p-8 flex flex-col gap-6 md:gap-8 rounded-3xl bg-muted/20 border border-white/5 backdrop-blur-xl shadow-2xl"
+              className="lg:sticky lg:top-32 p-6 md:p-8 flex flex-col gap-6 md:gap-8  bg-muted/20 border border-white/5 backdrop-blur-xl shadow-2xl"
             >
               {/* Project Details List */}
               <div className="space-y-4">
                 <div className="flex items-center gap-4 border-b border-border/50 pb-4">
-                  <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                  <div className="p-2  bg-primary/10 text-primary">
                     <LayoutIcon className="w-5 h-5" />
                   </div>
                   <div>
@@ -164,7 +165,7 @@ export default function ProjectDetailsClient({ project }: { project: ProjectType
                 </div>
                 
                 <div className="flex items-center gap-4 border-b border-border/50 pb-4">
-                  <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                  <div className="p-2  bg-primary/10 text-primary">
                     <CalendarIcon className="w-5 h-5" />
                   </div>
                   <div>
