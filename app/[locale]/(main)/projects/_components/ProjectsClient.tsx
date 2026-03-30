@@ -189,7 +189,7 @@ function ProjectCard({
             className="group/link flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-primary hover:text-primary/80 transition-colors"
           >
             <Eye className="w-3.5 h-3.5" />
-            {t("viewProject")}
+            {t("viewProject")}7,524 kB 
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
           </Link>
 
@@ -348,13 +348,14 @@ export default function ProjectsClient({
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
               {/* Tech Filter */}
               <Select value={activeTech} onValueChange={setActiveTech}>
-                <SelectTrigger className="h-11 w-full sm:min-w-[160px] bg-muted/30 border-border/50 ">
-                  <div className="flex items-center gap-2">
-                    <Filter className="h-3.5 w-3.5 opacity-50" />
-                    <SelectValue placeholder={t("filterByTech")} />
-                  </div>
+                <SelectTrigger className="h-11 w-full sm:min-w-[180px] bg-muted/30 border-border/50">
+                  <Filter className="h-3.5 w-3.5 opacity-50 shrink-0" />
+                  <SelectValue placeholder={t("filterByTech")} />
                 </SelectTrigger>
-                <SelectContent >
+                <SelectContent
+                  position="popper"
+                  className="max-h-60 overflow-y-auto [&_[data-slot=select-scroll-up-button]]:hidden [&_[data-slot=select-scroll-down-button]]:hidden"
+                >
                   {technologies.map((tech) => (
                     <SelectItem key={tech} value={tech}>
                       {tech}
@@ -365,10 +366,10 @@ export default function ProjectsClient({
 
               {/* Sort Order */}
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="h-11 w-full sm:min-w-[160px] bg-muted/30 border-border/50">
+                <SelectTrigger className="h-11 w-full sm:min-w-[180px] bg-muted/30 border-border/50">
                   <SelectValue placeholder={t("sortBy")} />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent position="popper" className="max-h-60 overflow-y-auto [&_[data-slot=select-scroll-up-button]]:hidden [&_[data-slot=select-scroll-down-button]]:hidden">
                   <SelectItem value="newest">{t("newest")}</SelectItem>
                   <SelectItem value="oldest">{t("oldest")}</SelectItem>
                   <SelectItem value="nameAsc">{t("nameAsc")}</SelectItem>

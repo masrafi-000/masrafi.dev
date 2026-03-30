@@ -4,6 +4,7 @@ import Container from "@/components/custom/container";
 import { Badge } from "@/components/ui/badge";
 import { Github } from "@/components/ui/social-icons";
 import { Link } from "@/i18n/navigation";
+
 import {
   AnimatePresence,
   motion,
@@ -42,7 +43,7 @@ interface ProjectType {
   gallery: string[];
 }
 
-// ─── Lightbox ─────────────────────────────────────────────────────────────────
+
 function Lightbox({
   images,
   activeIndex,
@@ -127,7 +128,7 @@ function Lightbox({
   );
 }
 
-// ─── Spec Row ─────────────────────────────────────────────────────────────────
+
 function SpecRow({
   icon,
   label,
@@ -161,7 +162,7 @@ function SpecRow({
   );
 }
 
-// ─── Main Component ────────────────────────────────────────────────────────────
+
 export default function ProjectDetailsClient({
   project,
 }: {
