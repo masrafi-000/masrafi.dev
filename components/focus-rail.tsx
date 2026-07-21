@@ -185,7 +185,7 @@ export function FocusRail({
                 animate={{
                   x: xOffset,
                   z: zOffset,
-                  scale: scale, // Trigger "tap" via TAP_SPRING when this changes
+                  scale: scale, 
                   rotateY: rotateY,
                   opacity: opacity,
                   filter: `blur(${blur}px) brightness(${brightness})`,

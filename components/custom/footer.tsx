@@ -1,6 +1,5 @@
-import { Link } from "@/i18n/navigation";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { LanguageSwitcher } from "./language-switcher";
 
 export const Footer = () => {
   const t = useTranslations("Footer");
@@ -36,10 +35,6 @@ export const Footer = () => {
             {t("contact")}
           </Link>
         </nav>
-
-        <div className="flex items-center gap-2">
-          <LanguageSwitcher />
-        </div>
       </div>
     </footer>
   );

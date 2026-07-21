@@ -5,7 +5,7 @@ import Container from "@/components/custom/container";
 import Section from "@/components/custom/section";
 import SectionHeading from "@/components/custom/sectionHeading";
 import { Badge } from "@/components/ui/badge";
-import { Link } from "@/i18n/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import {

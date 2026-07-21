@@ -1,11 +1,10 @@
 "use client";
 
 import { ToggleTheme } from "@/components/lightswind/toggle-theme";
-import { Link } from "@/i18n/navigation";
+import Link from "next/link";
 import gsap from "@/lib/gsap";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import { LanguageSwitcher } from "./language-switcher";
 import MasrafiLogo from "./logo";
 import { useTerminalStore } from "@/store/terminal-store";
 import { Terminal as TerminalIcon } from "lucide-react";
@@ -212,7 +211,6 @@ export const Navbar = () => {
             >
               <TerminalIcon className="w-4 h-4" />
             </button>
-            <LanguageSwitcher />
             <ToggleTheme animationType="circle-spread" className="scale-90" />
           </div>
 
@@ -242,13 +240,7 @@ export const Navbar = () => {
             ))}
           </div>
 
-          <div className="flex items-center justify-between pt-6 border-t border-border/20 shrink-0 mt-auto pb-4">
-            <div className="flex items-center gap-3">
-              <span className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-                {t("language") || "Language"}
-              </span>
-              <LanguageSwitcher />
-            </div>
+          <div className="flex items-center justify-end pt-6 border-t border-border/20 shrink-0 mt-auto pb-4">
             <div className="flex items-center gap-3">
               <span className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                 {t("theme")}

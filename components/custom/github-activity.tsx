@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import gsap from "@/lib/gsap";
 import { ScrollTrigger } from "@/lib/gsap";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,14 +30,12 @@ const RepoIcon = ({ className }: { className?: string }) => (
 
 export const GitHubActivity = () => {
   const t = useTranslations("GitHub");
-  const locale = useLocale();
   const { resolvedTheme } = useTheme();
-
   // Fetch data with TanStack Query and Axios
   const { data, isLoading, error } = useQuery({
-    queryKey: ["githubActivity", locale],
+    queryKey: ["githubActivity"],
     queryFn: async () => {
-      const { data } = await axios.get(`/${locale}/api/v0/github`);
+      const { data } = await axios.get("/api/v0/github");
       return data;
     },
     staleTime: 60 * 1000 * 60, // 1 hour cache on the client side
@@ -323,7 +321,7 @@ export const GitHubActivity = () => {
                               </>
                             )}
                           </div>
-                          <span className="shrink-0">{t("updatedAuth")} {new Date(repo.updated_at).toLocaleDateString(locale)}</span>
+                          <span className="shrink-0">{t("updatedAuth")} {new Date(repo.updated_at).toLocaleDateString("en-US")}</span>
                         </CardFooter>
                       </Card>
                     </Link>

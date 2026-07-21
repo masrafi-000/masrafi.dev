@@ -1,135 +1,230 @@
 [
   {
     "id": "1",
-    "slug": "ecommerce-dashboard",
-    "title": "E-commerce Admin Dashboard",
-    "category": "Ecommerce",
-    "year": 2024,
-    "description": "A high-performance admin panel for tracking sales and inventory.",
-    "longDescription": "This comprehensive dashboard built for e-commerce managers provides real-time insights into sales performance, inventory levels, and customer behavior. It features complex data visualizations using Chart.js, a robust state management system with Zustand, and a high-performance backend powered by Prisma and PostgreSQL.",
-    "tech": ["React", "Zustand", "Prisma", "PostgreSQL", "Tailwind CSS"],
-    "imageSrc": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
+    "slug": "estatery",
+    "title": "Estatery - Real Estate Platform",
+    "category": "Real Estate",
+    "year": 2026,
+    "description": "A modern real estate platform for browsing, searching, and managing property listings.",
+    "longDescription": "Estatery is a full-stack real estate platform built with Next.js and TypeScript. The application provides advanced property search, filtering, responsive property listings, user authentication, and an intuitive user experience. Form validation is powered by React Hook Form and Zod, while Zustand handles efficient client-side state management. The project focuses on scalable architecture, clean UI, and production-ready development practices.",
+    "tech": [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Tailwind CSS",
+      "React Hook Form",
+      "Zod",
+      "Zustand"
+    ],
+    "imageSrc": "/projects/estatery.png",
     "featured": true,
     "links": {
-      "live": "https://dashboard-demo.masrafi.dev",
-      "github": "https://github.com/masrafi-000/dashboard"
+      "live": "https://estatery-masrafi.vercel.app/",
+      "github": ""
     },
     "gallery": [
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"
+      "/projects/estatery-1.png",
+      "/projects/estatery-2.png"
     ]
   },
   {
     "id": "2",
-    "slug": "ai-content-studio",
-    "title": "AI Content Studio",
-    "category": "SAAS",
-    "year": 2024,
-    "description": "Integration of Gemini API for automated content creation.",
-    "longDescription": "AI Content Studio is a powerful tool designed for creators. By leveraging the Google Gemini API, it allows users to generate high-quality blog posts, social media captions, and product descriptions in seconds. The application features a sleek, intuitive UI built with Next.js and Framer Motion.",
-    "tech": ["Next.js", "Google AI SDK", "TypeScript", "Framer Motion"],
-    "imageSrc": "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2532&auto=format&fit=crop",
+    "slug": "cine-ticket",
+    "title": "CineTicket - Movie Ticket Booking Platform",
+    "category": "Entertainment",
+    "year": 2026,
+    "description": "An online movie ticket booking platform with a modern and responsive interface.",
+    "longDescription": "CineTicket is a modern movie ticket booking application built with Next.js and TypeScript. Users can browse movies, explore showtimes, view detailed movie information, and experience a clean booking workflow. The project emphasizes responsive design, optimized performance, reusable components, and scalable frontend architecture.",
+    "tech": [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Tailwind CSS"
+    ],
+    "imageSrc": "/projects/cineticket.png",
     "featured": true,
     "links": {
-      "live": "https://ai-studio.masrafi.dev",
-      "github": "https://github.com/masrafi-000/ai-gen"
+      "live": "https://cine-ticket-masrafi-000.vercel.app",
+      "github": ""
     },
     "gallery": [
-      "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2532&auto=format&fit=crop"
+      "/projects/cineticket-1.png"
     ]
   },
   {
     "id": "3",
-    "slug": "portfolio-v1",
-    "title": "Minimalist Portfolio v1",
-    "category": "Portfolio",
-    "year": 2023,
-    "description": "A modern, interactive portfolio built with Next.js and GSAP.",
-    "longDescription": "My previous portfolio iteration focused on pure minimalist design and high-end animations. It showcased the power of GSAP for orchestrating complex entrance sequences and ScrollTrigger for interactive storytelling. This project laid the foundation for my current design philosophy.",
-    "tech": ["Next.js", "TypeScript", "GSAP", "Tailwind CSS"],
-    "imageSrc": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2372&auto=format&fit=crop",
+    "slug": "boizaar",
+    "title": "BoiZaar - Online Book Marketplace",
+    "category": "E-commerce",
+    "year": 2026,
+    "description": "An online marketplace for discovering and purchasing books.",
+    "longDescription": "BoiZaar is a modern book marketplace where users can browse books, search by categories, and explore product details. Built using Next.js and TypeScript, the application includes form validation with React Hook Form and Zod, global state management with Zustand, and a responsive interface focused on usability and performance.",
+    "tech": [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Tailwind CSS",
+      "React Hook Form",
+      "Zod",
+      "Zustand"
+    ],
+    "imageSrc": "/projects/boizaar.png",
     "featured": true,
     "links": {
-      "live": "https://v1.masrafi.dev",
-      "github": "https://github.com/masrafi-000/portfolio-v1"
+      "live": "https://trio-beam-boi-zaar-masrafi-000.vercel.app/",
+      "github": ""
     },
     "gallery": [
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2372&auto=format&fit=crop"
+      "/projects/boizaar-1.png"
     ]
   },
   {
     "id": "4",
-    "slug": "pos-pro-system",
-    "title": "POS Pro Cloud",
-    "category": "POS",
-    "year": 2024,
-    "description": "Cloud-based point of sale system for retail businesses.",
-    "longDescription": "POS Pro Cloud is a robust point of sale system designed for retailers of all sizes. It features offline support, real-time inventory synchronization across multiple locations, and comprehensive sales reporting. Built with Electron for desktop and React for the web client.",
-    "tech": ["React", "Electron", "Firebase", "Redux"],
-    "imageSrc": "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?q=80&w=2370&auto=format&fit=crop",
+    "slug": "estatein",
+    "title": "Estatein - Real Estate Website",
+    "category": "Real Estate",
+    "year": 2025,
+    "description": "A premium real estate website built with Next.js.",
+    "longDescription": "Estatein is a modern real estate website featuring elegant property showcases, search functionality, responsive layouts, and optimized performance. The project was developed to practice scalable component architecture, reusable UI, and modern frontend development using Next.js and TypeScript.",
+    "tech": [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Tailwind CSS",
+      "React Hook Form",
+      "Zod"
+    ],
+    "imageSrc": "/projects/estatein.png",
     "featured": false,
     "links": {
-      "live": "https://pos.masrafi.dev",
-      "github": "https://github.com/masrafi-000/portfolio-v1"
+      "live": "https://real-state-app-masrafi-000.vercel.app/",
+      "github": ""
     },
     "gallery": [
-      "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?q=80&w=2370&auto=format&fit=crop"
+      "/projects/estatein-1.png"
     ]
   },
   {
     "id": "5",
-    "slug": "booking-engine",
-    "title": "StayFlow Booking",
-    "category": "Booking",
-    "year": 2023,
-    "description": "Advanced hotel and apartment booking engine.",
-    "longDescription": "StayFlow is a specialized booking engine built for the hospitality industry. It includes a dynamic pricing engine, channel manager integration, and a sleek guest booking portal. Optimized for high conversion rates and mobile devices.",
-    "tech": ["Next.js", "Prisma", "Stripe", "PostgreSQL"],
-    "imageSrc": "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2370&auto=format&fit=crop",
+    "slug": "task-manager",
+    "title": "Task Manager Application",
+    "category": "Productivity",
+    "year": 2025,
+    "description": "A task management application with authentication and state management.",
+    "longDescription": "Task Manager is a productivity application that enables users to create, organize, update, and manage daily tasks efficiently. Built using Next.js and Redux Toolkit, the project demonstrates state management, reusable components, clean architecture, and responsive UI design. The demo backend is currently inactive.",
+    "tech": [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Redux Toolkit",
+      "Tailwind CSS"
+    ],
+    "imageSrc": "/projects/task-manager.png",
     "featured": false,
     "links": {
-      "live": "https://pos.masrafi.dev",
-      "github": "https://github.com/masrafi-000/booking"
+      "live": "https://mytaskmanager-masrafi-000.vercel.app/",
+      "github": ""
     },
     "gallery": [
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2370&auto=format&fit=crop"
+      "/projects/task-manager-1.png"
     ]
   },
   {
     "id": "6",
-    "slug": "learnify-lms",
-    "title": "Learnify LMS",
-    "category": "ELearning",
-    "year": 2022,
-    "description": "Comprehensive learning management system for schools.",
-    "longDescription": "Learnify LMS provides a seamless educational experience for both teachers and students. It features live video classes, automated grading, student progress tracking, and interactive quizzes. Built with performance and scalability in mind.",
-    "tech": ["Vue.js", "Node.js", "Socket.io", "MongoDB"],
-    "imageSrc": "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=2370&auto=format&fit=crop",
+    "slug": "software-landing-page",
+    "title": "Software Landing Page",
+    "category": "Business",
+    "year": 2025,
+    "description": "A responsive landing page for showcasing software products and services.",
+    "longDescription": "A modern software company landing page built with Next.js and Tailwind CSS. The website includes animated sections, responsive layouts, engaging UI components, and optimized performance. It was designed to demonstrate frontend design principles and user experience best practices.",
+    "tech": [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Tailwind CSS",
+      "AOS"
+    ],
+    "imageSrc": "/projects/software-landing.png",
     "featured": false,
     "links": {
-      "live": "https://learnify.masrafi.dev",
-      "github": "https://github.com/masrafi-000/booking"
+      "live": "https://software-landing-page-eosin.vercel.app/",
+      "github": ""
     },
     "gallery": [
-      "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=2370&auto=format&fit=crop"
+      "/projects/software-landing-1.png"
     ]
   },
   {
     "id": "7",
-    "slug": "pro-erp",
-    "title": "Enterprise Resource Planner",
-    "category": "ERP",
+    "slug": "doctor-appointment",
+    "title": "Doctor Appointment Booking",
+    "category": "Healthcare",
     "year": 2024,
-    "description": "Comprehensive ERP system for manufacturing units.",
-    "longDescription": "A heavy-duty ERP solution managing supply chains, payroll, HRM, and accounting. Built with a focus on data integrity and real-time reporting for large industrial units.",
-    "tech": ["React", "PostgreSQL", "Express", "Node.js"],
-    "imageSrc": "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2370&auto=format&fit=crop",
+    "description": "A frontend application for booking doctor appointments online.",
+    "longDescription": "A healthcare appointment booking interface built using React and Vite. Users can browse doctors, explore available services, and schedule appointments through an intuitive interface. The project focuses on responsive layouts, reusable React components, and modern frontend development practices.",
+    "tech": [
+      "React",
+      "JavaScript",
+      "Vite",
+      "Tailwind CSS"
+    ],
+    "imageSrc": "/projects/doctor.png",
     "featured": false,
     "links": {
-      "live": "https://erp.masrafi.dev",
-      "github": "https://github.com/masrafi-000/booking"
+      "live": "https://doctor-appointment-website-tau.vercel.app/",
+      "github": ""
     },
     "gallery": [
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2370&auto=format&fit=crop"
+      "/projects/doctor-1.png"
+    ]
+  },
+  {
+    "id": "8",
+    "slug": "apple-clone",
+    "title": "Apple Website Clone",
+    "category": "Landing Page",
+    "year": 2024,
+    "description": "A visually engaging Apple-inspired landing page with 3D interactions.",
+    "longDescription": "An Apple-inspired frontend experience developed with React, Vite, and Three.js. The application showcases interactive 3D animations, smooth scrolling, modern UI components, and responsive layouts to recreate the premium feel of Apple's official website.",
+    "tech": [
+      "React",
+      "JavaScript",
+      "Three.js",
+      "Vite",
+      "Tailwind CSS"
+    ],
+    "imageSrc": "/projects/apple-clone.png",
+    "featured": false,
+    "links": {
+      "live": "https://apple-clone-mu-seven.vercel.app/",
+      "github": ""
+    },
+    "gallery": [
+      "/projects/apple-clone-1.png"
+    ]
+  },
+  {
+    "id": "9",
+    "slug": "portfolio-demo",
+    "title": "Portfolio Website",
+    "category": "Portfolio",
+    "year": 2024,
+    "description": "A personal portfolio website showcasing projects and technical skills.",
+    "longDescription": "A clean and responsive personal portfolio developed with React and Tailwind CSS. The website highlights projects, skills, contact information, and provides a modern developer portfolio experience with responsive layouts and reusable components.",
+    "tech": [
+      "React",
+      "JavaScript",
+      "Vite",
+      "Tailwind CSS"
+    ],
+    "imageSrc": "/projects/portfolio.png",
+    "featured": false,
+    "links": {
+      "live": "https://portfolio-demo-fawn.vercel.app/",
+      "github": ""
+    },
+    "gallery": [
+      "/projects/portfolio-1.png"
     ]
   }
 ]

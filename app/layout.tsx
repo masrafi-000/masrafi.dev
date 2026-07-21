@@ -2,7 +2,7 @@ import { QueryProvider } from "@/providers/query-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { getMessages } from "next-intl/server";
 import { cookies } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -24,14 +24,9 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }>) {
-  const { locale } = await params;
-
-  setRequestLocale(locale);
   const messages = await getMessages();
 
   const cookieStore = await cookies();
@@ -39,7 +34,7 @@ export default async function RootLayout({
   const htmlClass = themeCookie === "dark" ? "dark" : "";
 
   return (
-    <html lang={locale} suppressHydrationWarning className={htmlClass}>
+    <html lang="en" suppressHydrationWarning className={htmlClass}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
@@ -50,7 +45,7 @@ export default async function RootLayout({
           storageKey="theme"
           disableTransitionOnChange
         >
-          <NextIntlClientProvider messages={messages} locale={locale}>
+          <NextIntlClientProvider messages={messages} locale="en">
             <QueryProvider>
               {children}
             </QueryProvider>
