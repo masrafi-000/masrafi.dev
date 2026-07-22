@@ -1,5 +1,5 @@
-import { FolderGit2, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FolderGit2 } from "lucide-react";
+import { CreateProjectDialog } from "./_components/create-project-dialog";
 
 export default function ProjectsAdminPage() {
   return (
@@ -11,9 +11,7 @@ export default function ProjectsAdminPage() {
             Manage, edit, and organize your portfolio project items.
           </p>
         </div>
-        <Button className="font-semibold shadow-xs">
-          <Plus className="w-4 h-4 mr-2" /> Add New Project
-        </Button>
+        <CreateProjectDialog />
       </div>
 
       <div className="rounded-xl border border-dashed border-border p-12 flex flex-col items-center justify-center text-center gap-3 bg-card/50">

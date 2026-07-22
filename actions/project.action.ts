@@ -13,10 +13,6 @@ import {
   type LinkIcon,
 } from "@/validators/project.zod";
 
-// Re-export category and upload actions for easy import access
-export * from "./category.action";
-export * from "./upload.action";
-
 export type ActionResponse<T = unknown> =
   | { success: true; data: T; message?: string }
   | { success: false; error: string; errors?: Record<string, string[]> };
