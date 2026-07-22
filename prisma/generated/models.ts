@@ -8,5 +8,13 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/user'
+export type * from './models/Project'
+export type * from './models/Category'
+export type * from './models/ProjectLink'
+export type * from './models/GalleryImage'
+export type * from './models/Contributor'
+export type * from './models/User'
+export type * from './models/Session'
+export type * from './models/Account'
+export type * from './models/Verification'
 export type * from './commonInputTypes'

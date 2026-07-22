@@ -9,7 +9,18 @@
 * 🟢 You can import this file directly.
 */
 
+export const LinkIcon = {
+  WEBSITE: 'WEBSITE',
+  GITHUB: 'GITHUB',
+  GITLAB: 'GITLAB',
+  BITBUCKET: 'BITBUCKET',
+  FIGMA: 'FIGMA',
+  YOUTUBE: 'YOUTUBE',
+  DOCUMENTATION: 'DOCUMENTATION',
+  PLAYSTORE: 'PLAYSTORE',
+  APPSTORE: 'APPSTORE',
+  NPM: 'NPM',
+  OTHER: 'OTHER'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type LinkIcon = (typeof LinkIcon)[keyof typeof LinkIcon]

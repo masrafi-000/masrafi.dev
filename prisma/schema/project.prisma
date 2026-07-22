@@ -1,0 +1,120 @@
+model Project {
+  id String @id @default(cuid())
+
+  name String
+  slug String @unique
+
+  description String
+  longDescription String
+
+  year Int
+
+  featured Boolean @default(false)
+
+  featureImage String?
+
+  technologies String[]
+
+  categories Category[]
+
+  links ProjectLink[]
+
+  gallery GalleryImage[]
+
+  contributors Contributor[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([featured])
+  @@index([year])
+}
+
+model Category {
+  id String @id @default(cuid())
+
+  name String
+  slug String @unique
+
+  description String?
+
+  projects Project[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+}
+
+model ProjectLink {
+  id String @id @default(cuid())
+
+  name String
+
+  url String
+
+  icon LinkIcon?
+
+  projectId String
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+}
+
+model GalleryImage {
+  id String @id @default(cuid())
+
+  url String
+
+  alt String?
+
+  order Int @default(0)
+
+  projectId String
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+  @@index([order])
+}
+
+model Contributor {
+  id String @id @default(cuid())
+
+  name String
+
+  role String
+
+  avatar String?
+
+  githubUrl String?
+
+  website String?
+
+  projectId String
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+}
+
+enum LinkIcon {
+  WEBSITE
+  GITHUB
+  GITLAB
+  BITBUCKET
+  FIGMA
+  YOUTUBE
+  DOCUMENTATION
+  PLAYSTORE
+  APPSTORE
+  NPM
+  OTHER
+}

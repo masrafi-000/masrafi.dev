@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import gsap from "@/lib/gsap";
 import { cn } from "@/lib/utils";
-import { ContactFormData, contactSchema } from "@/validators/zod/contact";
+import { ContactFormData, contactSchema } from "@/validators/contact.zod";
 
 
 
