@@ -2,17 +2,20 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { deleteFileFromR2 } from "@/utils/image";
+import { processImageInput } from "./upload.action";
 import {
   ZCCreateProjectSchema,
   ZCUpdateProjectSchema,
-  ZCCreateCategorySchema,
-  ZCUpdateCategorySchema,
   slugify,
   type ZCCreateProjectInput,
   type ZCUpdateProjectInput,
-  type ZCCreateCategoryInput,
   type LinkIcon,
 } from "@/validators/project.zod";
+
+// Re-export category and upload actions for easy import access
+export * from "./category.action";
+export * from "./upload.action";
 
 export type ActionResponse<T = unknown> =
   | { success: true; data: T; message?: string }
@@ -159,7 +162,6 @@ export async function createProject(
     let slug = data.slug || slugify(name);
     const description = data.description || data.des || "";
     const longDescription = data.longDescription || data.ldes || "";
-    const featureImage = data.featureImage || data.featureImg || null;
     const technologies =
       data.technologies.length > 0 ? data.technologies : data.tech || [];
 
@@ -176,7 +178,46 @@ export async function createProject(
       slug = `${slug}-${Date.now().toString(36)}`;
     }
 
-    // 4. Resolve Categories Connection
+    // 4. R2 Image Uploads (featureImage, gallery, avatars) & Get R2 Public Access URLs
+    const rawFeatureImage = data.featureImage || data.featureImg;
+    const featureImageUrl = await processImageInput(rawFeatureImage, "projects");
+
+    const galleryCreateProcessed = await Promise.all(
+      (data.gallery || []).map(async (item, idx) => {
+        let rawUrl: unknown = item;
+        let alt: string | null = `${name} gallery image ${idx + 1}`;
+        let order = idx;
+
+        if (typeof item === "object" && item !== null && "url" in item) {
+          rawUrl = (item as any).url;
+          alt = (item as any).alt || alt;
+          order = (item as any).order ?? order;
+        }
+
+        const uploadedUrl = await processImageInput(rawUrl, "gallery");
+        return {
+          url: uploadedUrl || "",
+          alt,
+          order,
+        };
+      })
+    );
+    const galleryCreate = galleryCreateProcessed.filter((g) => g.url !== "");
+
+    const contributorsCreate = await Promise.all(
+      (data.contributors || []).map(async (c) => {
+        const avatarUrl = await processImageInput(c.avatar, "avatars");
+        return {
+          name: c.name,
+          role: c.role || "Contributor",
+          avatar: avatarUrl,
+          githubUrl: c.githubUrl || c.gitUrl || null,
+          website: c.website || null,
+        };
+      })
+    );
+
+    // 5. Resolve Categories Connection
     let categoryIdsToConnect: string[] = [];
 
     if (data.categoryIds && data.categoryIds.length > 0) {
@@ -208,37 +249,14 @@ export async function createProject(
 
     categoryIdsToConnect = Array.from(new Set(categoryIdsToConnect));
 
-    // 5. Relational Create Items
+    // 6. Relational Create Items
     const linksCreate = (data.links || []).map((link) => ({
       name: link.name,
       url: link.url,
       icon: (link.icon as LinkIcon) || null,
     }));
 
-    const galleryCreate = (data.gallery || []).map((item, idx) => {
-      if (typeof item === "string") {
-        return {
-          url: item,
-          alt: `${name} gallery image ${idx + 1}`,
-          order: idx,
-        };
-      }
-      return {
-        url: item.url,
-        alt: item.alt || `${name} gallery image ${idx + 1}`,
-        order: item.order ?? idx,
-      };
-    });
-
-    const contributorsCreate = (data.contributors || []).map((c) => ({
-      name: c.name,
-      role: c.role || "Contributor",
-      avatar: c.avatar || null,
-      githubUrl: c.githubUrl || c.gitUrl || null,
-      website: c.website || null,
-    }));
-
-    // 6. DB Creation
+    // 7. Store Project & R2 Access URLs in DB
     const newProject = await prisma.project.create({
       data: {
         name,
@@ -247,7 +265,7 @@ export async function createProject(
         longDescription,
         year: data.year,
         featured: data.featured ?? false,
-        featureImage,
+        featureImage: featureImageUrl,
         technologies,
         categories: {
           connect: categoryIdsToConnect.map((id) => ({ id })),
@@ -265,7 +283,7 @@ export async function createProject(
       include: defaultProjectInclude,
     });
 
-    // 7. Cache Revalidation
+    // 8. Cache Revalidation
     revalidatePath("/dashboard/projects");
     revalidatePath("/projects");
     revalidatePath(`/projects/${slug}`);
@@ -273,7 +291,7 @@ export async function createProject(
     return {
       success: true,
       data: newProject,
-      message: "Project created successfully!",
+      message: "Project created successfully with R2 image access URLs saved to database!",
     };
   } catch (error) {
     console.error("[createProject Error]:", error);
@@ -312,12 +330,15 @@ export async function updateProject(
     const description = data.description || data.des || existing.description;
     const longDescription =
       data.longDescription || data.ldes || existing.longDescription;
-    const featureImage =
-      data.featureImage !== undefined
-        ? data.featureImage
-        : data.featureImg !== undefined
-        ? data.featureImg
-        : existing.featureImage;
+
+    // Process featureImage R2 access URL update
+    let featureImageUrl = existing.featureImage;
+    if (data.featureImage !== undefined || data.featureImg !== undefined) {
+      const rawFeature =
+        data.featureImage !== undefined ? data.featureImage : data.featureImg;
+      featureImageUrl = await processImageInput(rawFeature, "projects");
+    }
+
     const technologies =
       data.technologies && data.technologies.length > 0
         ? data.technologies
@@ -330,7 +351,62 @@ export async function updateProject(
       }
     }
 
-    // 3. Resolve Categories
+    // 3. Process gallery images update & store R2 access URLs
+    let galleryCreate:
+      | Array<{ url: string; alt: string | null; order: number }>
+      | undefined = undefined;
+
+    if (data.gallery !== undefined) {
+      const processedGallery = await Promise.all(
+        data.gallery.map(async (item, idx) => {
+          let rawUrl: unknown = item;
+          let alt: string | null = `${name} gallery image ${idx + 1}`;
+          let order = idx;
+
+          if (typeof item === "object" && item !== null && "url" in item) {
+            rawUrl = (item as any).url;
+            alt = (item as any).alt || alt;
+            order = (item as any).order ?? order;
+          }
+
+          const uploadedUrl = await processImageInput(rawUrl, "gallery");
+          return {
+            url: uploadedUrl || "",
+            alt,
+            order,
+          };
+        })
+      );
+      galleryCreate = processedGallery.filter((g) => g.url !== "");
+    }
+
+    // 4. Process contributors update & store avatar R2 access URLs
+    let contributorsCreate:
+      | Array<{
+          name: string;
+          role: string;
+          avatar: string | null;
+          githubUrl: string | null;
+          website: string | null;
+        }>
+      | undefined = undefined;
+
+    if (data.contributors !== undefined) {
+      contributorsCreate = await Promise.all(
+        data.contributors.map(async (c) => {
+          const avatarUrl = await processImageInput(c.avatar, "avatars");
+          return {
+            name: c.name,
+            role: c.role || "Contributor",
+            avatar: avatarUrl,
+            githubUrl: c.githubUrl || c.gitUrl || null,
+            website: c.website || null,
+          };
+        })
+      );
+    }
+
+    // 5. Resolve Categories
     let categoryIdsToConnect: string[] = [];
     if (data.categoryIds && data.categoryIds.length > 0) {
       categoryIdsToConnect = data.categoryIds;
@@ -359,7 +435,7 @@ export async function updateProject(
       }
     }
 
-    // 4. Atomic Transaction
+    // 6. Atomic Transaction
     const updatedProject = await prisma.$transaction(async (tx) => {
       if (data.links !== undefined) {
         await tx.projectLink.deleteMany({ where: { projectId: id } });
@@ -379,29 +455,6 @@ export async function updateProject(
         icon: (link.icon as LinkIcon) || null,
       }));
 
-      const galleryCreate = (data.gallery || []).map((item, idx) => {
-        if (typeof item === "string") {
-          return {
-            url: item,
-            alt: `${name} gallery image ${idx + 1}`,
-            order: idx,
-          };
-        }
-        return {
-          url: item.url,
-          alt: item.alt || `${name} gallery image ${idx + 1}`,
-          order: item.order ?? idx,
-        };
-      });
-
-      const contributorsCreate = (data.contributors || []).map((c) => ({
-        name: c.name,
-        role: c.role || "Contributor",
-        avatar: c.avatar || null,
-        githubUrl: c.githubUrl || c.gitUrl || null,
-        website: c.website || null,
-      }));
-
       return await tx.project.update({
         where: { id },
         data: {
@@ -411,16 +464,19 @@ export async function updateProject(
           longDescription,
           year: data.year ?? existing.year,
           featured: data.featured ?? existing.featured,
-          featureImage,
+          featureImage: featureImageUrl,
           technologies,
           categories:
             categoryIdsToConnect.length > 0
               ? { set: categoryIdsToConnect.map((catId) => ({ id: catId })) }
               : undefined,
           links: data.links !== undefined ? { create: linksCreate } : undefined,
-          gallery: data.gallery !== undefined ? { create: galleryCreate } : undefined,
+          gallery:
+            galleryCreate !== undefined
+              ? { create: galleryCreate }
+              : undefined,
           contributors:
-            data.contributors !== undefined
+            contributorsCreate !== undefined
               ? { create: contributorsCreate }
               : undefined,
         },
@@ -428,7 +484,7 @@ export async function updateProject(
       });
     });
 
-    // 5. Cache Revalidation
+    // 7. Cache Revalidation
     revalidatePath("/dashboard/projects");
     revalidatePath("/projects");
     revalidatePath(`/projects/${slug}`);
@@ -456,7 +512,11 @@ export async function deleteProject(id: string): Promise<ActionResponse> {
       return { success: false, error: "Project ID is required for deletion." };
     }
 
-    const existing = await prisma.project.findUnique({ where: { id } });
+    const existing = await prisma.project.findUnique({
+      where: { id },
+      include: { gallery: true },
+    });
+
     if (!existing) {
       return { success: false, error: "Project not found." };
     }
@@ -464,6 +524,16 @@ export async function deleteProject(id: string): Promise<ActionResponse> {
     const deleted = await prisma.project.delete({
       where: { id },
     });
+
+    // Cleanup images from Cloudflare R2
+    if (existing.featureImage) {
+      deleteFileFromR2(existing.featureImage).catch(() => {});
+    }
+    for (const g of existing.gallery) {
+      if (g.url) {
+        deleteFileFromR2(g.url).catch(() => {});
+      }
+    }
 
     revalidatePath("/dashboard/projects");
     revalidatePath("/projects");
@@ -479,182 +549,6 @@ export async function deleteProject(id: string): Promise<ActionResponse> {
     return {
       success: false,
       error: error instanceof Error ? error.message : "Failed to delete project.",
-    };
-  }
-}
-
-// ==========================================
-// CATEGORY ACTIONS
-// ==========================================
-
-export async function getProjectCategories() {
-  try {
-    const categories = await prisma.category.findMany({
-      include: {
-        _count: {
-          select: { projects: true },
-        },
-      },
-      orderBy: { name: "asc" },
-    });
-
-    return { success: true, data: categories };
-  } catch (error) {
-    console.error("[getProjectCategories Error]:", error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Failed to fetch project categories.",
-    };
-  }
-}
-
-export async function createProjectCategory(
-  input: string | ZCCreateCategoryInput
-): Promise<ActionResponse> {
-  try {
-    const rawData = typeof input === "string" ? { name: input } : input;
-    const parsed = ZCCreateCategorySchema.safeParse(rawData);
-
-    if (!parsed.success) {
-      return {
-        success: false,
-        error: "Validation error for category.",
-        errors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
-      };
-    }
-
-    const { name, description } = parsed.data;
-    const slug = parsed.data.slug || slugify(name);
-
-    const existing = await prisma.category.findUnique({ where: { slug } });
-    if (existing) {
-      return {
-        success: false,
-        error: `Category with slug "${slug}" already exists.`,
-      };
-    }
-
-    const newCategory = await prisma.category.create({
-      data: {
-        name,
-        slug,
-        description: description || null,
-      },
-    });
-
-    revalidatePath("/dashboard/categories");
-    revalidatePath("/dashboard/projects");
-    revalidatePath("/projects");
-
-    return {
-      success: true,
-      data: newCategory,
-      message: "Category created successfully!",
-    };
-  } catch (error) {
-    console.error("[createProjectCategory Error]:", error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Failed to create category.",
-    };
-  }
-}
-
-export async function updateProjectCategory(
-  id: string,
-  input: string | Partial<ZCCreateCategoryInput>
-): Promise<ActionResponse> {
-  try {
-    if (!id) {
-      return { success: false, error: "Category ID is required." };
-    }
-
-    const rawData =
-      typeof input === "string" ? { id, name: input } : { id, ...input };
-    const parsed = ZCUpdateCategorySchema.safeParse(rawData);
-
-    if (!parsed.success) {
-      return {
-        success: false,
-        error: "Validation error.",
-        errors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
-      };
-    }
-
-    const { name, description } = parsed.data;
-    const existing = await prisma.category.findUnique({ where: { id } });
-    if (!existing) {
-      return { success: false, error: "Category not found." };
-    }
-
-    let slug = parsed.data.slug;
-    if (name && !slug) {
-      slug = slugify(name);
-    }
-
-    if (slug && slug !== existing.slug) {
-      const slugConflict = await prisma.category.findUnique({ where: { slug } });
-      if (slugConflict && slugConflict.id !== id) {
-        return { success: false, error: `Category slug "${slug}" is already taken.` };
-      }
-    }
-
-    const updatedCategory = await prisma.category.update({
-      where: { id },
-      data: {
-        name: name ?? existing.name,
-        slug: slug ?? existing.slug,
-        description: description !== undefined ? description : existing.description,
-      },
-    });
-
-    revalidatePath("/dashboard/categories");
-    revalidatePath("/dashboard/projects");
-    revalidatePath("/projects");
-
-    return {
-      success: true,
-      data: updatedCategory,
-      message: "Category updated successfully!",
-    };
-  } catch (error) {
-    console.error("[updateProjectCategory Error]:", error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Failed to update category.",
-    };
-  }
-}
-
-export async function deleteProjectCategory(id: string): Promise<ActionResponse> {
-  try {
-    if (!id) {
-      return { success: false, error: "Category ID is required." };
-    }
-
-    const existing = await prisma.category.findUnique({ where: { id } });
-    if (!existing) {
-      return { success: false, error: "Category not found." };
-    }
-
-    const deleted = await prisma.category.delete({
-      where: { id },
-    });
-
-    revalidatePath("/dashboard/categories");
-    revalidatePath("/dashboard/projects");
-    revalidatePath("/projects");
-
-    return {
-      success: true,
-      data: deleted,
-      message: "Category deleted successfully!",
-    };
-  } catch (error) {
-    console.error(`[deleteProjectCategory Error for ID: ${id}]:`, error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Failed to delete category.",
     };
   }
 }

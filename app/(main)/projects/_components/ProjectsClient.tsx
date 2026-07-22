@@ -354,7 +354,7 @@ export default function ProjectsClient({
                 </SelectTrigger>
                 <SelectContent
                   position="popper"
-                  className="max-h-60 overflow-y-auto [&_[data-slot=select-scroll-up-button]]:hidden [&_[data-slot=select-scroll-down-button]]:hidden"
+                  className="max-h-60 overflow-y-auto **:data-[slot=select-scroll-up-button]:hidden **:data-[slot=select-scroll-down-button]:hidden"
                 >
                   {technologies.map((tech) => (
                     <SelectItem key={tech} value={tech}>
@@ -369,7 +369,7 @@ export default function ProjectsClient({
                 <SelectTrigger className="h-11 w-full sm:min-w-[180px] bg-muted/30 border-border/50">
                   <SelectValue placeholder={t("sortBy")} />
                 </SelectTrigger>
-                <SelectContent position="popper" className="max-h-60 overflow-y-auto [&_[data-slot=select-scroll-up-button]]:hidden [&_[data-slot=select-scroll-down-button]]:hidden">
+                <SelectContent position="popper" className="max-h-60 overflow-y-auto **:data-[slot=select-scroll-up-button]:hidden **:data-[slot=select-scroll-down-button]:hidden">
                   <SelectItem value="newest">{t("newest")}</SelectItem>
                   <SelectItem value="oldest">{t("oldest")}</SelectItem>
                   <SelectItem value="nameAsc">{t("nameAsc")}</SelectItem>

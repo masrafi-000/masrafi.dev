@@ -68,7 +68,7 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-8">
       {/* Welcome Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-gradient-to-r from-primary/10 via-background to-accent/20 border border-border/50 shadow-sm">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-linear-to-r from-primary/10 via-background to-accent/20 border border-border/50 shadow-sm">
         <div className="space-y-1">
           <h1 className="text-2xl font-bold tracking-tight text-foreground">
             Welcome back, {userName}! 👋

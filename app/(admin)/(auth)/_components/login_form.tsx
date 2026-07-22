@@ -184,7 +184,7 @@ export function LoginForm({
             </FieldGroup>
           </form>
 
-          <div className="relative hidden bg-gradient-to-br from-primary/10 via-muted/50 to-primary/20 md:flex flex-col justify-between p-10 border-l border-border/40 overflow-hidden">
+          <div className="relative hidden bg-linear-to-br from-primary/10 via-muted/50 to-primary/20 md:flex flex-col justify-between p-10 border-l border-border/40 overflow-hidden">
             {/* Background Decorative Patterns */}
             <div className="absolute -right-12 -top-12 w-64 h-64 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
             <div className="absolute -left-12 -bottom-12 w-64 h-64 rounded-full bg-primary/15 blur-3xl pointer-events-none" />

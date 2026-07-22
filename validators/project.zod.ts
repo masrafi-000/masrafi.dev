@@ -32,6 +32,11 @@ const OptionalUrlSchema = z
   .nullable()
   .optional();
 
+const ImageOrFileSchema = z
+  .any()
+  .nullable()
+  .optional();
+
 export const SlugSchema = z
   .string()
   .trim()
@@ -91,7 +96,7 @@ export type ZCLink = z.infer<typeof ZCLinkSchema>;
 // --- Gallery Image Schema ---
 export const ZCGalleryImageSchema = z.object({
   id: z.string().optional(),
-  url: UrlSchema,
+  url: ImageOrFileSchema,
   alt: z.string().trim().max(200).nullable().optional(),
   order: z.number().int().default(0).optional(),
 });
@@ -107,7 +112,7 @@ export const ZCContributorSchema = z.object({
     .trim()
     .min(1, "Role is required.")
     .max(100, "Role cannot exceed 100 characters."),
-  avatar: OptionalUrlSchema,
+  avatar: ImageOrFileSchema,
   githubUrl: OptionalUrlSchema,
   website: OptionalUrlSchema,
   gitUrl: OptionalUrlSchema,
@@ -147,8 +152,8 @@ export const ZCProjectSchema = z.object({
 
   featured: z.boolean().default(false),
 
-  featureImage: OptionalUrlSchema,
-  featureImg: OptionalUrlSchema,
+  featureImage: ImageOrFileSchema,
+  featureImg: ImageOrFileSchema,
 
   technologies: z
     .array(z.string().trim().min(1))
@@ -168,7 +173,7 @@ export const ZCProjectSchema = z.object({
 
   links: z.array(ZCLinkSchema).default([]),
 
-  gallery: z.array(z.union([UrlSchema, ZCGalleryImageSchema])).default([]),
+  gallery: z.array(z.union([ImageOrFileSchema, ZCGalleryImageSchema])).default([]),
 
   contributors: z.array(ZCContributorSchema).default([]),
 });
